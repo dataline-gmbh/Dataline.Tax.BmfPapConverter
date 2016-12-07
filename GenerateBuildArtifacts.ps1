@@ -1,6 +1,8 @@
 ﻿# Generatorskript für Dataline.Tax.BmfPapConverter
 # Generiert aus allen PAP in .\data Projekte, buildet sie und verschiebt sie in das Rootprojekt
 
+$ErrorActionPreference = "Stop"
+
 function Fail([string] $message)
 {
     Throw "Buildskript fehlgeschlagen: $message"
