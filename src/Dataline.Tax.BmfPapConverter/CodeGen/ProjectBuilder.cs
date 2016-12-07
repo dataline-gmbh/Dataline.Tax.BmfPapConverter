@@ -20,9 +20,7 @@ namespace Dataline.Tax.BmfPapConverter.CodeGen
 
         public string Description { get; set; } = "Generiert mit Dataline.Tax.BmpPapConverter";
 
-        public string TestDataPath { get; set; }
-
-        public string InputClassName { get; set; }
+        public string[] TestDataPaths { get; set; }
 
         public void SaveToDirectory(string directoryPath)
         {
@@ -51,10 +49,14 @@ namespace Dataline.Tax.BmfPapConverter.CodeGen
             var projectJson = PrepareSkeleton(StaticCodeLoader.Load(StaticCodeLoader.ProjectSkeletonStaticCodeName));
             File.WriteAllText(Path.Combine(srcDirectory, "project.json"), projectJson);
 
-            if (TestDataPath != null)
+            if (TestDataPaths != null && TestDataPaths.Length > 0)
             {
                 // Testdaten kopieren
-                File.Copy(TestDataPath, Path.Combine(testDirectory, "testdata.csv"));
+                int filei = 0;
+                foreach (string path in TestDataPaths)
+                {
+                    File.Copy(path, Path.Combine(testDirectory, $"testdata-{++filei}.csv"));
+                }
 
                 // Testprojekt schreiben
                 string testClass = PrepareSkeleton(StaticCodeLoader.Load(StaticCodeLoader.TestSkeletonStaticCodeName));

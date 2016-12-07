@@ -9,7 +9,7 @@
 
   "buildOptions": {
     "copyToOutput": {
-      "includeFiles": "testdata.csv" 
+      "include": "testdata-*.csv" 
     } 
   },
 

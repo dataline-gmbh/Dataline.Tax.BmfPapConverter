@@ -9,7 +9,7 @@ using System.Xml.Linq;
 namespace Dataline.Tax.BmfPapConverter.Cmdlets
 {
     [Cmdlet(VerbsData.Convert, "BmfPap")]
-    public class ConvertBmfPapCmdlet : PSCmdlet
+    public class ConvertBmfPapCmdlet : Cmdlet
     {
         [Parameter(Mandatory = true)]
         public FileInfo PapPath { get; set; }
@@ -48,7 +48,7 @@ namespace Dataline.Tax.BmfPapConverter.Cmdlets
         public string ProjectDescription { get; set; }
 
         [Parameter]
-        public FileInfo TestDataPath { get; set; }
+        public FileInfo[] TestDataPaths { get; set; }
 
         [Parameter]
         public string[] Extensions { get; set; }
@@ -88,8 +88,8 @@ namespace Dataline.Tax.BmfPapConverter.Cmdlets
                 project.Copyright = ProjectCopyright;
             if (ProjectDescription != null)
                 project.Description = ProjectDescription;
-            if (TestDataPath != null)
-                project.TestDataPath = TestDataPath.FullName;
+            if (TestDataPaths != null)
+                project.TestDataPaths = TestDataPaths.Select(f => f.FullName).ToArray();
             
             if (!OutputDirectory.Exists)
             {

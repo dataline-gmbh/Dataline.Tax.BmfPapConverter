@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Xunit;
@@ -10,74 +11,97 @@ namespace %projectname%.Test
 {
     public class Test
     {
+        private static readonly CultureInfo _culture = new CultureInfo("de-DE"); // Deutsche Dezimaltrenner in der CSV
+
         [Fact]
         public void RunTest()
         {
-            string data = Path.Combine(Path.GetDirectoryName(typeof(Test).GetTypeInfo().Assembly.Location), "testdata.csv");
-            Assert.True(File.Exists(data), $"Test-Daten existieren nicht: {data}");
+            var testdataPaths = Directory.EnumerateFiles(Path.GetDirectoryName(typeof(Test).GetTypeInfo().Assembly.Location))
+                .Where(path => Path.GetFileName(path).StartsWith("testdata-") && Path.GetExtension(path) == ".csv");
 
-            var culture = new CultureInfo("de-DE"); // Deutsche Dezimaltrenner in der CSV
-        
-            foreach (var line in ReadCsvTable(data))
+            int files = 0;
+            int tests = 0;
+
+            foreach (string path in testdataPaths)
             {
-                var e = new Eingabeparameter
+                foreach (var line in ReadCsvTable(path))
                 {
-                    STKL = int.Parse(line["STKL"], culture),
-                    af = int.Parse(line["AF"], culture),
-                    f = double.Parse(line["F"], culture),
-                    ZKF = decimal.Parse(line["ZKF"], culture),
-                    AJAHR = int.Parse(line["AJAHR"], culture),
-                    ALTER1 = int.Parse(line["ALTER1"], culture),
-                    RE4 = decimal.Parse(line["RE4"], culture),
-                    VBEZ = decimal.Parse(line["VBEZ"], culture),
-                    LZZ = int.Parse(line["LZZ"], culture),
-                    KRV = int.Parse(line["KRV"], culture),
-                    KVZ = decimal.Parse(line["KVZ"], culture),
-                    PKPV = decimal.Parse(line["PKPV"], culture),
-                    PKV = int.Parse(line["PKV"], culture),
-                    PVS = int.Parse(line["PVS"], culture),
-                    PVZ = int.Parse(line["PVZ"], culture),
-                    R = int.Parse(line["R"], culture),
-                    LZZFREIB = decimal.Parse(line["LZZFREIB"], culture),
-                    LZZHINZU = decimal.Parse(line["LZZHINZU"], culture),
-                    VJAHR = int.Parse(line["VJAHR"], culture),
-                    VBEZM = decimal.Parse(line["VBEZM"], culture),
-                    VBEZS = decimal.Parse(line["VBEZS"], culture),
-                    ZMVB = int.Parse(line["ZMVB"], culture),
-                    JRE4 = decimal.Parse(line["JRE4"], culture),
-                    JVBEZ = decimal.Parse(line["JVBEZ"], culture),
-                    JFREIB = decimal.Parse(line["JFREIB"], culture),
-                    JHINZU = decimal.Parse(line["JHINZU"], culture),
-                    JRE4ENT = decimal.Parse(line["JRE4ENT"], culture),
-                    SONSTB = decimal.Parse(line["SONSTB"], culture),
-                    STERBE = decimal.Parse(line["STERBE"], culture),
-                    VBS = decimal.Parse(line["VBS"], culture),
-                    SONSTENT = decimal.Parse(line["SONSTENT"], culture),
-                    VKAPA = decimal.Parse(line["VKAPA"], culture),
-                    VMT = decimal.Parse(line["VMT"], culture),
-                    ENTSCH = decimal.Parse(line["ENTSCH"], culture)
-                };
+                    var e = new Eingabeparameter
+                    {
+                        STKL = int.Parse(line["STKL"], _culture),
+                        af = int.Parse(line["AF"], _culture),
+                        f = double.Parse(line["F"], _culture),
+                        ZKF = decimal.Parse(line["ZKF"], _culture),
+                        AJAHR = int.Parse(line["AJAHR"], _culture),
+                        ALTER1 = int.Parse(line["ALTER1"], _culture),
+                        RE4 = decimal.Parse(line["RE4"], _culture),
+                        VBEZ = decimal.Parse(line["VBEZ"], _culture),
+                        LZZ = int.Parse(line["LZZ"], _culture),
+                        KRV = int.Parse(line["KRV"], _culture),
+                        KVZ = decimal.Parse(line["KVZ"], _culture),
+                        PKPV = decimal.Parse(line["PKPV"], _culture),
+                        PKV = int.Parse(line["PKV"], _culture),
+                        PVS = int.Parse(line["PVS"], _culture),
+                        PVZ = int.Parse(line["PVZ"], _culture),
+                        R = int.Parse(line["R"], _culture),
+                        LZZFREIB = decimal.Parse(line["LZZFREIB"], _culture),
+                        LZZHINZU = decimal.Parse(line["LZZHINZU"], _culture),
+                        VJAHR = int.Parse(line["VJAHR"], _culture),
+                        VBEZM = decimal.Parse(line["VBEZM"], _culture),
+                        VBEZS = decimal.Parse(line["VBEZS"], _culture),
+                        ZMVB = int.Parse(line["ZMVB"], _culture),
+                        JRE4 = decimal.Parse(line["JRE4"], _culture),
+                        JVBEZ = decimal.Parse(line["JVBEZ"], _culture),
+                        JFREIB = decimal.Parse(line["JFREIB"], _culture),
+                        JHINZU = decimal.Parse(line["JHINZU"], _culture),
+                        JRE4ENT = decimal.Parse(line["JRE4ENT"], _culture),
+                        SONSTB = decimal.Parse(line["SONSTB"], _culture),
+                        STERBE = decimal.Parse(line["STERBE"], _culture),
+                        VBS = decimal.Parse(line["VBS"], _culture),
+                        SONSTENT = decimal.Parse(line["SONSTENT"], _culture),
+                        VKAPA = decimal.Parse(line["VKAPA"], _culture),
+                        VMT = decimal.Parse(line["VMT"], _culture),
+                        ENTSCH = decimal.Parse(line["ENTSCH"], _culture)
+                    };
 
-                var berechnung = new Berechnung(e);
-                berechnung.Lohnsteuer();
+                    var berechnung = new Berechnung(e);
+                    berechnung.Lohnsteuer();
 
-                var a = berechnung.Ausgabeparameter;
+                    var a = berechnung.Ausgabeparameter;
 
-                Assert.Equal(decimal.Parse(line["LSTLZZ"], culture), a.LSTLZZ);
-                Assert.Equal(decimal.Parse(line["SOLZLZZ"], culture), a.SOLZLZZ);
-                Assert.Equal(decimal.Parse(line["BK"], culture), a.BK);
-                Assert.Equal(decimal.Parse(line["STS"], culture), a.STS);
-                Assert.Equal(decimal.Parse(line["SOLZS"], culture), a.SOLZS);
-                Assert.Equal(decimal.Parse(line["BKS"], culture), a.BKS);
-                Assert.Equal(decimal.Parse(line["STV"], culture), a.STV);
-                Assert.Equal(decimal.Parse(line["SOLZV"], culture), a.SOLZV);
-                Assert.Equal(decimal.Parse(line["BKV"], culture), a.BKV);
-                Assert.Equal(decimal.Parse(line["VKVLZZ"], culture), a.VKVLZZ);
-                Assert.Equal(decimal.Parse(line["VKVSONST"], culture), a.VKVSONST);
+                    Assert.Equal(decimal.Parse(line["LSTLZZ"], _culture), a.LSTLZZ);
+
+                    // Optionale Tests je nach Existenz des Feldes in der CSV
+                    OptionalTest(line, "SOLZLZZ", a.SOLZLZZ);
+                    OptionalTest(line, "BK", a.BK);
+                    OptionalTest(line, "STS", a.STS);
+                    OptionalTest(line, "SOLZS", a.SOLZS);
+                    OptionalTest(line, "BKS", a.BKS);
+                    OptionalTest(line, "STV", a.STV);
+                    OptionalTest(line, "SOLZV", a.SOLZV);
+                    OptionalTest(line, "BKV", a.BKV);
+                    OptionalTest(line, "VKVLZZ", a.VKVLZZ);
+                    OptionalTest(line, "VKVSONST", a.VKVSONST);
+
+                    tests++;
+                }
+
+                files++;
             }
+
+            Assert.NotEqual(0, tests);
+
+            Console.WriteLine($"{tests} Berechnungstests aus {files} Testdateien durchgeführt");
         }
 
-        private IEnumerable<Dictionary<string, string>> ReadCsvTable(string path)
+        private static void OptionalTest(Dictionary<string, string> line, string name, decimal current)
+        {
+            string expected;
+            if (line.TryGetValue(name, out expected))
+                Assert.Equal(decimal.Parse(expected, _culture), current);
+        }
+
+        private static IEnumerable<Dictionary<string, string>> ReadCsvTable(string path)
         {
             const char sep = ';';
 
