@@ -3,4 +3,4 @@
 
 $srcDir = Resolve-Path ".\src\"
 
-Get-ChildItem "$srcDir\*\bin\Release\*.symbols.nupkg"
+Get-ChildItem "$srcDir\*\bin\Release\*.symbols.nupkg" | Remove-Item
