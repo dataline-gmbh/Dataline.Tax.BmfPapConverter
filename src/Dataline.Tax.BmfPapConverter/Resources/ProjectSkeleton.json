@@ -1,0 +1,16 @@
+﻿{
+  "version": "%version%",
+  "authors": [ "%author%" ],
+  "description": "%description%",
+  "copyright": "Copyright © %copyright%",
+
+  "frameworks": {
+    "net46": {},
+    "netstandard1.3": {
+      "dependencies": {
+        "System.Runtime": "4.3.0",
+        "System.Linq": "4.3.0"
+      } 
+    }
+  }
+}

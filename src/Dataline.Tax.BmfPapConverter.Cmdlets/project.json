@@ -1,0 +1,14 @@
+﻿{
+  "version": "0.1.0-*",
+  "authors": [ "DATALINE GmbH & Co. KG" ],
+  "description": "Automatische Konvertierung der BMF-PAP (PowerShell Cmdlets)",
+  "copyright": "Copyright © 2016 DATALINE GmbH & Co. KG",
+  "dependencies": {
+    "Dataline.Tax.BmfPapConverter": { "target" : "project" },
+    "Microsoft.PowerShell.5.ReferenceAssemblies": "1.0.0"
+  },
+
+  "frameworks": {
+    "net46": {}
+  }
+}

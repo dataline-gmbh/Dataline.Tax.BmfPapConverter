@@ -1,0 +1,30 @@
+﻿{
+  "version": "0.1.0-*",
+  "authors": [ "DATALINE GmbH & Co. KG" ],
+  "description": "Automatische Konvertierung der BMF-PAP",
+  "copyright": "Copyright © 2016 DATALINE GmbH & Co. KG",
+  "dependencies": {
+    "Microsoft.CodeAnalysis.CSharp": "1.3.2"
+  },
+
+  "buildOptions": {
+    "compile": {
+      "exclude": "Resources/**"
+    },
+    "embed": "Resources/**"
+  },
+
+  "frameworks": {
+    "net46": {
+      "frameworkAssemblies": {
+        "System.Xml": "4.0.0",
+        "System.Xml.Linq": "4.0.0"
+      }
+    },
+    "netstandard1.3": {
+      "dependencies": {
+        "NETStandard.Library": "1.6.0"
+      }
+    }
+  }
+}
