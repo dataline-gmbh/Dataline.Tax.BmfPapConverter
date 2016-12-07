@@ -126,7 +126,7 @@ namespace Dataline.Tax.BmfPapConverter.Test
 
             var result = PapConverterTests.MakeSource(PapEvalCodeParser.ConvertToExpression(tree.GetRoot()));
 
-            const string expected = "(ZVBEZ.CompareTo(0m) == (-1))";
+            const string expected = "(CompareTo(ZVBEZ, 0m) == (-1))";
 
             Assert.Equal(expected, result);
         }

@@ -18,9 +18,9 @@ Write-Progress -Activity "Vorbereitung" -Status "Importiere Modul"
 Import-Module ".\src\Dataline.Tax.BmfPapConverter.Cmdlets\bin\Release\net46\Dataline.Tax.BmfPapConverter.Cmdlets.dll"
 CheckExitCode
 
-$srcDir = ".\src\"
-$testDir = ".\test\"
-$targetDir = ".\data\"
+$srcDir = Resolve-Path ".\src\"
+$testDir = Resolve-Path ".\test\"
+$targetDir = Resolve-Path ".\data\"
 
 foreach ($jahr in Get-ChildItem $targetDir) {
     $name = "Dataline.Tax.LSt$jahr"
