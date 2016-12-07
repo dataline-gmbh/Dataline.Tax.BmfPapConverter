@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// Berechnet die tarifliche Einkommenssteuer.
+/// Berechnet die tarifliche Einkommensteuer.
 /// </summary>
 /// <param name="x">
 /// Zu versteuerndes Einkommen gem. § 32a Abs. 1 und 2 EStG €, C
@@ -13,7 +13,7 @@
 /// <param name="gfb">
 /// Grundfreibetrag in Euro
 /// </param>
-/// <returns>Die tarifliche Einkommenssteuer.</returns>
+/// <returns>Die tarifliche Einkommensteuer.</returns>
 public decimal TariflicheEinkommensteuer(decimal x, int kztab, decimal gfb)
 {
     X = x;
