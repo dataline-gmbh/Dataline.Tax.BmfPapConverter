@@ -19,7 +19,7 @@ echo "Kompiliere BmfPapConverter"
 dotnet restore
 CheckExitCode
 
-dotnet build .\src\Dataline.Tax.BmfPapConverter.Cmdlets --Configuration Release
+dotnet build .\src\Dataline.Tax.BmfPapConverter.Cmdlets -c Release
 CheckExitCode
 
 echo "Importiere Modul"

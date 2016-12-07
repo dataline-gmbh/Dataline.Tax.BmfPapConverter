@@ -37,4 +37,14 @@ private static decimal Floor(decimal value, int decimals)
     return Calc(value, decimals, decimal.Floor);
 }
 
+private static int CompareTo<T>(T left, T right) where T : IComparable<T>
+{
+    int result = left.CompareTo(right);
+    if (result < 0)
+        return -1;
+    if (result > 0)
+        return 1;
+    return 0;
+}
+
 #endregion

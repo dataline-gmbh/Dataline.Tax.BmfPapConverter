@@ -254,4 +254,24 @@ namespace Dataline.Tax.BmfPapConverter.CodeGen
             builder.AppendToken(")");
         }
     }
+
+    public class NewExpressionBuilder : ExpressionBuilder
+    {
+        public NewExpressionBuilder(Type type)
+        {
+            Type = type;
+        }
+
+        public Type Type { get; set; }
+
+        public override void CodeGen(CodeBuilder builder)
+        {
+            builder.AppendToken("new");
+
+            Type.CodeGen(builder);
+            
+            builder.ForceNoWhitespace();
+            builder.AppendToken("()");
+        }
+    }
 }

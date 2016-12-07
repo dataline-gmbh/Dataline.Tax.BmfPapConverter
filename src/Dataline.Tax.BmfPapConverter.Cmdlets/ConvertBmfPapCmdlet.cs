@@ -47,6 +47,12 @@ namespace Dataline.Tax.BmfPapConverter.Cmdlets
         [Parameter]
         public string ProjectDescription { get; set; }
 
+        [Parameter]
+        public FileInfo TestDataPath { get; set; }
+
+        [Parameter]
+        public string[] Extensions { get; set; }
+
         protected override void ProcessRecord()
         {
             XDocument pap;
@@ -64,13 +70,16 @@ namespace Dataline.Tax.BmfPapConverter.Cmdlets
                 OutputClassName = OutputClassName,
                 OperationClassName = OperationClassName,
                 OperationMainMethodName = OperationMainMethodName,
-                Namespace = Namespace
+                Namespace = Namespace,
+                Extensions = Extensions
             };
 
             if (!string.IsNullOrEmpty(FileHeader))
                 converter.FileHeader = FileHeader;
 
             var project = converter.GenerateProject(papDocument);
+            project.Name = Namespace;
+
             if (ProjectVersion != null)
                 project.Version = ProjectVersion;
             if (ProjectAuthor != null)
@@ -79,6 +88,8 @@ namespace Dataline.Tax.BmfPapConverter.Cmdlets
                 project.Copyright = ProjectCopyright;
             if (ProjectDescription != null)
                 project.Description = ProjectDescription;
+            if (TestDataPath != null)
+                project.TestDataPath = TestDataPath.FullName;
             
             if (!OutputDirectory.Exists)
             {

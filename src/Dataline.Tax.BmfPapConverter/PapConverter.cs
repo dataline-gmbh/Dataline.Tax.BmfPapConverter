@@ -42,6 +42,13 @@ namespace Dataline.Tax.BmfPapConverter
         public string FileHeader { get; set; } =
             $"Automatisch generiert mit Dataline.Tax.BmfPapConverter\nam {DateTime.Now}";
 
+        /// <summary>
+        /// Die gewünschten Erweiterungen der Berechnungsklasse.
+        /// Eine Erweiterung ist ein Codebaustein, der in die Berechnungsklasse eingesetzt wird.
+        /// Verfügbare Erweiterungen befinden sich im Resources-Verzeichnis mit Präfix "Extension_".
+        /// </summary>
+        public string[] Extensions { get; set; }
+
         public ProjectBuilder GenerateProject(PapDocument document)
         {
             var inputClass = new ModuleBuilder(ModuleBuilder.ModuleTypes.Class, Visibilities.Public, InputClassName);
@@ -67,6 +74,9 @@ namespace Dataline.Tax.BmfPapConverter
 
             // Berechnungs-Code erzeugen
             GenerateCalculationCode(operationClass, document);
+
+            // Erweiterungen erzeugen
+            GenerateExtensions(operationClass);
 
             // Statische Berechnungsmethoden in Berechnungsklasse erzeugen
             operationClass.StaticCode.Add(StaticCodeLoader.Load(StaticCodeLoader.PapOperationalClassStaticCodeName));
@@ -129,9 +139,13 @@ namespace Dataline.Tax.BmfPapConverter
             });
 
             // Property für die Ausgangsparameter erzeugen
+            var outType = new ArbitraryType(OutputClassName);
             target.Properties.Add(new AutoPropertyBuilder(Visibilities.Public,
-                                                          new ArbitraryType(OutputClassName),
-                                                          OutputClassName));
+                                                          outType,
+                                                          OutputClassName)
+            {
+                DefaultExpression = new NewExpressionBuilder(outType)
+            });
         }
 
         private void GenerateOperationalAccessors(ModuleBuilder target,
@@ -184,6 +198,15 @@ namespace Dataline.Tax.BmfPapConverter
                 {
                     Summary = constant.Documentation
                 });
+            }
+        }
+
+        private void GenerateExtensions(ModuleBuilder target)
+        {
+            foreach (string extension in Extensions ?? new string[] {})
+            {
+                string extCode = StaticCodeLoader.Load(StaticCodeLoader.ExtensionStaticCodeName(extension));
+                target.StaticCode.Add(extCode);
             }
         }
     }

@@ -174,9 +174,10 @@ namespace Dataline.Tax.BmfPapConverter
                         if (arguments.Length != 1)
                             throw new NotSupportedException();
 
-                        var invocation = new InvocationExpressionBuilder("CompareTo",
-                                                                         memberAccessNode.BaseExpression,
-                                                                         ConvertToExpression(arguments[0]));
+                        var invocation = new InvocationExpressionBuilder("CompareTo");
+
+                        invocation.Arguments.Add(memberAccessNode.BaseExpression);
+                        invocation.Arguments.Add(ConvertToExpression(arguments[0]));
 
                         Result = invocation;
                         break;
