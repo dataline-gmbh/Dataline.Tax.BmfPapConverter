@@ -3,6 +3,4 @@
 
 $ErrorActionPreference = "Stop"
 
-$srcDir = Resolve-Path ".\src\"
-
-Get-ChildItem "$srcDir\*\bin\Release\*.symbols.nupkg" | Remove-Item
+Get-ChildItem "*.symbols.nupkg" -Recurse | Remove-Item
