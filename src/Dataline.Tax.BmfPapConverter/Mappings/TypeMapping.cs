@@ -1,7 +1,10 @@
-﻿using System;
+﻿// <copyright file="TypeMapping.cs" company="DATALINE GmbH &amp; Co. KG">
+// Copyright (c) DATALINE GmbH &amp; Co. KG. All rights reserved.
+// See LICENSE in the project root for license information.
+// </copyright>
+
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Type = Dataline.Tax.BmfPapConverter.CodeGen.Type;
 
 namespace Dataline.Tax.BmfPapConverter.Mappings

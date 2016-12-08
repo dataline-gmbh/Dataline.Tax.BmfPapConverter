@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿// <copyright file="Type.cs" company="DATALINE GmbH &amp; Co. KG">
+// Copyright (c) DATALINE GmbH &amp; Co. KG. All rights reserved.
+// See LICENSE in the project root for license information.
+// </copyright>
+
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Dataline.Tax.BmfPapConverter.CodeGen
 {

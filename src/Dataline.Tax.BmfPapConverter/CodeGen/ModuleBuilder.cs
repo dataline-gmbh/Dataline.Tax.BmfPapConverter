@@ -1,7 +1,11 @@
-﻿using System;
+﻿// <copyright file="ModuleBuilder.cs" company="DATALINE GmbH &amp; Co. KG">
+// Copyright (c) DATALINE GmbH &amp; Co. KG. All rights reserved.
+// See LICENSE in the project root for license information.
+// </copyright>
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Dataline.Tax.BmfPapConverter.CodeGen
 {

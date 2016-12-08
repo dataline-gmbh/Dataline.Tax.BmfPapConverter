@@ -1,14 +1,14 @@
-﻿using System;
-using System.CodeDom;
-using System.Collections.Generic;
+﻿// <copyright file="PapEvalCodeParser.cs" company="DATALINE GmbH &amp; Co. KG">
+// Copyright (c) DATALINE GmbH &amp; Co. KG. All rights reserved.
+// See LICENSE in the project root for license information.
+// </copyright>
+
+using System;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 using Dataline.Tax.BmfPapConverter.CodeGen;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Type = System.Type;
 
 namespace Dataline.Tax.BmfPapConverter
 {
