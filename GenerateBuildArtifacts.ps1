@@ -3,6 +3,8 @@
 
 $ErrorActionPreference = "Stop"
 
+$targetProjectVersion = "1.0.0-*"
+
 function Fail([string] $message)
 {
     Throw "Buildskript fehlgeschlagen: $message"
@@ -35,7 +37,7 @@ foreach ($jahr in Get-ChildItem $targetDir) {
     $testSrc = Join-Path -Path (Join-Path -Path $outDir -ChildPath "test") -ChildPath "$name.Test"
     
     Write-Progress -Activity $name -Status "Konvertiere PAP"
-    Convert-BmfPap -PapPath $papPath -OutputDirectory $outDir -Namespace $name -TestDataPaths $testStatic, $testTables -Extensions TariflicheEinkommensteuer -ProjectAuthor "DATALINE GmbH & Co. KG" -ProjectCopyright "2016 DATALINE GmbH & Co. KG" -ProjectDescription "BMF-PAP Lohnsteuerberechnung $jahr"
+    Convert-BmfPap -PapPath $papPath -OutputDirectory $outDir -Namespace $name -TestDataPaths $testStatic, $testTables -Extensions TariflicheEinkommensteuer -ProjectAuthor "DATALINE GmbH & Co. KG" -ProjectCopyright "2016 DATALINE GmbH & Co. KG" -ProjectDescription "BMF-PAP Lohnsteuerberechnung $jahr" -ProjectVersion $targetProjectVersion
     CheckExitCode
     
     Write-Progress -Activity $name -Status "Verschiebe Artifakte in Zielverzeichnis"
