@@ -9,10 +9,10 @@ using System.Xml.Linq;
 namespace Dataline.Tax.BmfPapConverter.Cmdlets
 {
     [Cmdlet(VerbsData.Convert, "BmfPap")]
-    public class ConvertBmfPapCmdlet : Cmdlet
+    public class ConvertBmfPapCmdlet : PSCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "Pfad des XML-PAP")]
-        public FileInfo PapPath { get; set; }
+        public string PapPath { get; set; }
 
         [Parameter(Mandatory = true, HelpMessage = "Ausgabeverzeichnis des Projekts")]
         public DirectoryInfo OutputDirectory { get; set; }
@@ -48,7 +48,7 @@ namespace Dataline.Tax.BmfPapConverter.Cmdlets
         public string ProjectDescription { get; set; }
 
         [Parameter(HelpMessage = "CSV-Testdaten für das generierte Testprojekt")]
-        public FileInfo[] TestDataPaths { get; set; }
+        public string[] TestDataPaths { get; set; }
 
         [Parameter(HelpMessage = "Die gewünschten Erweiterungen der Berechnungsklasse")]
         public string[] Extensions { get; set; }
@@ -57,7 +57,7 @@ namespace Dataline.Tax.BmfPapConverter.Cmdlets
         {
             XDocument pap;
 
-            using (var papStream = PapPath.OpenRead())
+            using (var papStream = new FileStream(SessionState.Path.GetUnresolvedProviderPathFromPSPath(PapPath), FileMode.Open))
             {
                 pap = XDocument.Load(papStream);
             }
@@ -89,7 +89,7 @@ namespace Dataline.Tax.BmfPapConverter.Cmdlets
             if (ProjectDescription != null)
                 project.Description = ProjectDescription;
             if (TestDataPaths != null)
-                project.TestDataPaths = TestDataPaths.Select(f => f.FullName).ToArray();
+                project.TestDataPaths = TestDataPaths.Select(f => SessionState.Path.GetUnresolvedProviderPathFromPSPath(f)).ToArray();
             
             if (!OutputDirectory.Exists)
             {

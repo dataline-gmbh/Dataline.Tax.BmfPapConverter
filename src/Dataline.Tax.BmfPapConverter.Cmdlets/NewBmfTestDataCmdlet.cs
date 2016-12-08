@@ -9,22 +9,31 @@ using System.Threading.Tasks;
 namespace Dataline.Tax.BmfPapConverter.Cmdlets
 {
     [Cmdlet(VerbsCommon.New, "BmfTestData")]
-    public class NewBmfTestDataCmdlet : Cmdlet
+    public class NewBmfTestDataCmdlet : PSCmdlet
     {
+        public enum StandardTestDataTypes
+        {
+            Allgemein,
+            Besonders
+        }
+
         [Parameter(Mandatory = true, HelpMessage = "Lohnsteuer-Prüftabelle")]
         public decimal[][] Table { get; set; }
 
         [Parameter(Mandatory = true, HelpMessage = "Einkommensbezogener Zusatzbeitragssatz")]
         public decimal Kvz { get; set; }
 
-        [Parameter(Mandatory = true, HelpMessage = "Krankenversicherung"), ValidateRange(0, 2)]
+        [Parameter(Mandatory = true, HelpMessage = "Krankenversicherung", ParameterSetName = "Custom"), ValidateRange(0, 2)]
         public decimal Pkv { get; set; }
 
-        [Parameter(Mandatory = true, HelpMessage = "Merker für die Vorsorgepauschale"), ValidateRange(0, 2)]
+        [Parameter(Mandatory = true, HelpMessage = "Merker für die Vorsorgepauschale", ParameterSetName = "Custom"), ValidateRange(0, 2)]
         public decimal Krv { get; set; }
 
+        [Parameter(Mandatory = true, HelpMessage = "Typ der Prüftabelle", ParameterSetName = "Standard")]
+        public StandardTestDataTypes Type { get; set; }
+
         [Parameter(Mandatory = true)]
-        public FileInfo OutputPath { get; set; }
+        public string OutputPath { get; set; }
 
         protected override void ProcessRecord()
         {
@@ -33,10 +42,28 @@ namespace Dataline.Tax.BmfPapConverter.Cmdlets
                 "LZZFREIB;LZZHINZU;VJAHR;VBEZM;VBEZS;ZMVB;JRE4;JVBEZ;JFREIB;JHINZU;JRE4ENT;" +
                 "SONSTB;STERBE;VBS;SONSTENT;VKAPA;VMT;ENTSCH;LSTLZZ";
             var culture = new CultureInfo("de-DE"); // Deutsche Dezimaltrenner in CSV
+            
+            if (ParameterSetName == "Standard")
+            {
+                // Standard-Prüftabelle
+                switch (Type)
+                {
+                    case StandardTestDataTypes.Allgemein:
+                        Pkv = 0m;
+                        Krv = 0m;
+                        break;
+                    case StandardTestDataTypes.Besonders:
+                        Pkv = 1m;
+                        Krv = 2m;
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
 
             int lfdnr = 1;
 
-            using (var stream = OutputPath.OpenWrite())
+            using (var stream = new FileStream(SessionState.Path.GetUnresolvedProviderPathFromPSPath(OutputPath), FileMode.Create))
             using (var writer = new StreamWriter(stream))
             {
                 writer.WriteLine(header);
