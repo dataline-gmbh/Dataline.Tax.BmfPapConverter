@@ -49,6 +49,9 @@ namespace Dataline.Tax.BmfPapConverter.Cmdlets
         [Parameter(HelpMessage = "Beschreibung des generierten Projekts")]
         public string ProjectDescription { get; set; }
 
+        [Parameter(HelpMessage = "Zusätzliche Tags des generierten Projekts")]
+        public string[] ProjectTags { get; set; }
+
         [Parameter(HelpMessage = "CSV-Testdaten für das generierte Testprojekt")]
         public string[] TestDataPaths { get; set; }
 
@@ -90,6 +93,8 @@ namespace Dataline.Tax.BmfPapConverter.Cmdlets
                 project.Copyright = ProjectCopyright;
             if (ProjectDescription != null)
                 project.Description = ProjectDescription;
+            if (ProjectTags != null)
+                project.Tags.AddRange(ProjectTags);
             if (TestDataPaths != null)
                 project.TestDataPaths = TestDataPaths.Select(f => SessionState.Path.GetUnresolvedProviderPathFromPSPath(f)).ToArray();
             

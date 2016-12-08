@@ -3,6 +3,7 @@
   "authors": [ "%author%" ],
   "description": "%description%",
   "copyright": "Copyright © %copyright%",
+  "tags": [ %tags% ],
 
   "frameworks": {
     "net45": {},

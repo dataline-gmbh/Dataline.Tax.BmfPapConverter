@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace Dataline.Tax.BmfPapConverter.CodeGen
 {
@@ -20,6 +21,8 @@ namespace Dataline.Tax.BmfPapConverter.CodeGen
         public string Author { get; set; } = "Author";
 
         public string Copyright { get; set; } = DateTime.Now.Year.ToString();
+
+        public List<string> Tags { get; set; } = new List<string> { "Tax", "Lohn", "Berechnung", "Lohnsteuer" };
 
         public string Description { get; set; } = "Generiert mit Dataline.Tax.BmpPapConverter";
 
@@ -77,11 +80,14 @@ namespace Dataline.Tax.BmfPapConverter.CodeGen
 
         private string PrepareSkeleton(string skeleton)
         {
+            string tagsContent = string.Join(", ", Tags.Select(t => $"\"{t.JsonEscaped()}\""));
+
             return skeleton.Replace("%version%", Version.JsonEscaped())
                 .Replace("%author%", Author.JsonEscaped())
                 .Replace("%copyright%", Copyright.JsonEscaped())
                 .Replace("%description%", Description.JsonEscaped())
-                .Replace("%projectname%", Name.JsonEscaped());
+                .Replace("%projectname%", Name.JsonEscaped())
+                .Replace("%tags%", tagsContent);
         }
     }
 
