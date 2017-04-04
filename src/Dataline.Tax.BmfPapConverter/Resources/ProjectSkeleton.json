@@ -8,6 +8,10 @@
     "tags": [ %tags% ]
   },
 
+  "buildOptions": {
+    "xmlDoc": true
+  },
+
   "frameworks": {
     "net45": {},
     "netstandard1.3": {
