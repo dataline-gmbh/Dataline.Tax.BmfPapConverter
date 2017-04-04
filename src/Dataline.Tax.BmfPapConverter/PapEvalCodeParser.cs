@@ -1208,6 +1208,8 @@ namespace Dataline.Tax.BmfPapConverter
                         return new ConstantExpressionBuilder(typeof(decimal), "0");
                     if (MemberName == "ONE")
                         return new ConstantExpressionBuilder(typeof(decimal), "1");
+                    if (MemberName == "TEN")
+                        return new ConstantExpressionBuilder(typeof(decimal), "10");
                 }
 
                 return new MemberExpressionBuilder(memberExpressionBuilder.MemberPath.Concat(new []{MemberName}).ToList());

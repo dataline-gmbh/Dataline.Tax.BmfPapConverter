@@ -17,7 +17,8 @@
     "netstandard1.3": {
       "dependencies": {
         "System.Runtime": "4.3.0",
-        "System.Linq": "4.3.0"
+        "System.Linq": "4.3.0",
+        "System.Runtime.Extensions": "4.3.0"
       } 
     }
   }
