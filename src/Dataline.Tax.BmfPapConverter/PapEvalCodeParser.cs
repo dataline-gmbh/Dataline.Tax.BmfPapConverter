@@ -122,11 +122,13 @@ namespace Dataline.Tax.BmfPapConverter
                     {
                         // Runden; erstes Argument ist Nachkommastelle, zweites Argument
                         // ist Rundungsrichtung
-                        if (arguments.Length != 2)
+                        if (arguments.Length < 1 || arguments.Length > 2)
                             throw new NotSupportedException();
 
                         var decimals = (ConstantExpressionBuilder)ConvertToExpression(arguments[0]);
-                        var direction = (MemberExpressionBuilder)((MemberAccessNode)Convert(arguments[1])).ToExpression();
+                        var direction = arguments.Length == 2
+                            ? (MemberExpressionBuilder)((MemberAccessNode)Convert(arguments[1])).ToExpression()
+                            : null;
 
                         Result = MakeRoundingExpression(memberAccessNode.BaseExpression, decimals, direction);
                         break;
@@ -277,20 +279,32 @@ namespace Dataline.Tax.BmfPapConverter
                                                                    ConstantExpressionBuilder decimals,
                                                                    MemberExpressionBuilder direction)
         {
-            string roundingFunction;
+            if (direction != null)
+            {
+                string roundingFunction;
 
-            if (direction.IsEquivalent("BigDecimal.ROUND_UP"))
-                roundingFunction = "Ceiling";
-            else if (direction.IsEquivalent("BigDecimal.ROUND_DOWN"))
-                roundingFunction = "Floor";
+                if (direction.IsEquivalent("BigDecimal.ROUND_UP"))
+                    roundingFunction = "Ceiling";
+                else if (direction.IsEquivalent("BigDecimal.ROUND_DOWN"))
+                    roundingFunction = "Floor";
+                else
+                    throw new NotSupportedException();
+
+                var invocation = new InvocationExpressionBuilder(roundingFunction);
+                invocation.Arguments.Add(inner);
+                invocation.Arguments.Add(decimals);
+
+                return invocation;
+            }
             else
-                throw new NotSupportedException();
+            {
+                var invocation = new InvocationExpressionBuilder("System.Math.Round");
+                invocation.Arguments.Add(inner);
+                invocation.Arguments.Add(decimals);
+                invocation.Arguments.Add(new MemberExpressionBuilder("System", "MidpointRounding", "AwayFromZero"));
 
-            var invocation = new InvocationExpressionBuilder(roundingFunction);
-            invocation.Arguments.Add(inner);
-            invocation.Arguments.Add(decimals);
-
-            return invocation;
+                return invocation;
+            }
         }
 
         public override void VisitAccessorDeclaration(AccessorDeclarationSyntax node)
