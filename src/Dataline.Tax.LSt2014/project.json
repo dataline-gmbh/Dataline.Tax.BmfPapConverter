@@ -1,0 +1,25 @@
+{
+  "version": "1.0.0-*",
+  "authors": [ "DATALINE GmbH & Co. KG" ],
+  "description": "BMF-PAP Lohnsteuerberechnung 2014",
+  "copyright": "Copyright © 2016 DATALINE GmbH & Co. KG",
+
+  "packOptions": {
+    "tags": [ "Tax", "Lohn", "Berechnung", "Lohnsteuer", "DATALINE", "2014" ]
+  },
+
+  "buildOptions": {
+    "xmlDoc": true
+  },
+
+  "frameworks": {
+    "net45": {},
+    "netstandard1.3": {
+      "dependencies": {
+        "System.Runtime": "4.3.0",
+        "System.Linq": "4.3.0",
+        "System.Runtime.Extensions": "4.3.0"
+      } 
+    }
+  }
+}

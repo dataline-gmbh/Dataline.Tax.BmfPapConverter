@@ -1,0 +1,31 @@
+{
+  "version": "1.0.0-*",
+  "title": "Testprojekt %namespace%", 
+  "authors": [ "DATALINE GmbH & Co. KG" ],
+  "description": "BMF-PAP Lohnsteuerberechnung 2017",
+  "copyright": "Copyright © 2016 DATALINE GmbH & Co. KG",
+
+  "testRunner": "xunit",
+
+  "buildOptions": {
+    "copyToOutput": {
+      "include": "testdata-*.csv" 
+    } 
+  },
+
+  "dependencies": {
+    "Dataline.Tax.LSt2017": { "target": "project" },
+    "Microsoft.NETCore.App": {
+      "type": "platform",
+      "version": "1.0.1"
+    },
+    "dotnet-test-xunit": "2.2.0-preview2-build1029",
+    "xunit": "2.2.0-beta3-build3402"
+  },
+
+  "frameworks": {
+    "netcoreapp1.0": {
+      "imports": "portable-net45+netcore45"
+    }
+  }
+}
