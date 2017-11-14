@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Version>1.0.0</Version>
+    <Authors>DATALINE GmbH &amp; Co. KG</Authors>
+    <Description>BMF-PAP Lohnsteuerberechnung 2015</Description>
+    <Copyright>Copyright © 2017 DATALINE GmbH &amp; Co. KG</Copyright>
+    <Tags>Tax, Lohn, Berechnung, Lohnsteuer, DATALINE, 2015</Tags>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Update="testdata-*.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Dataline.Tax.LSt2015\Dataline.Tax.LSt2015.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
+    <PackageReference Include="xunit" Version="2.3.1" />
+  </ItemGroup>
+
+</Project>

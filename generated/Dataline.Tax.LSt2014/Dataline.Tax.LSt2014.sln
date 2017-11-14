@@ -1,0 +1,30 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2008
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{85B1E3E7-CDA7-4155-815A-C3EAD6230FBE}") = "Dataline.Tax.LSt2014", "Dataline.Tax.LSt2014\Dataline.Tax.LSt2014.csproj", "{E766609D-D8FE-4D18-A11B-D6AE859686C9}"
+EndProject
+Project("{85B1E3E7-CDA7-4155-815A-C3EAD6230FBE}") = "Dataline.Tax.LSt2014.Test", "Dataline.Tax.LSt2014.Test\Dataline.Tax.LSt2014.Test.csproj", "{F2B21DC1-AB52-4E47-B557-D0A47343BA34}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E766609D-D8FE-4D18-A11B-D6AE859686C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E766609D-D8FE-4D18-A11B-D6AE859686C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E766609D-D8FE-4D18-A11B-D6AE859686C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E766609D-D8FE-4D18-A11B-D6AE859686C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2B21DC1-AB52-4E47-B557-D0A47343BA34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2B21DC1-AB52-4E47-B557-D0A47343BA34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2B21DC1-AB52-4E47-B557-D0A47343BA34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2B21DC1-AB52-4E47-B557-D0A47343BA34}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {85B1E3E7-CDA7-4155-815A-C3EAD6230FBE}
+	EndGlobalSection
+EndGlobal
