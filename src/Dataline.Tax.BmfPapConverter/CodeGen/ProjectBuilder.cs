@@ -13,7 +13,7 @@ namespace Dataline.Tax.BmfPapConverter.CodeGen
     public class ProjectBuilder
     {
         public List<SourceBuilder> Sources { get; } = new List<SourceBuilder>();
-        
+
         public string Name { get; set; }
 
         public string Version { get; set; } = "1.0.0-*";
@@ -24,7 +24,7 @@ namespace Dataline.Tax.BmfPapConverter.CodeGen
 
         public List<string> Tags { get; set; } = new List<string> { "Tax", "Lohn", "Berechnung", "Lohnsteuer" };
 
-        public string Description { get; set; } = "Generiert mit Dataline.Tax.BmpPapConverter";
+        public string Description { get; set; } = "Generiert mit Dataline.Tax.BmfPapConverter";
 
         public string[] TestDataPaths { get; set; }
 
@@ -33,8 +33,8 @@ namespace Dataline.Tax.BmfPapConverter.CodeGen
             if (string.IsNullOrEmpty(Name))
                 throw new InvalidOperationException("Der Projektname muss angegeben werden.");
 
-            string srcDirectory = Path.Combine(directoryPath, "src", Name);
-            string testDirectory = Path.Combine(directoryPath, "test", $"{Name}.Test");
+            string srcDirectory = Path.Combine(directoryPath, Name);
+            string testDirectory = Path.Combine(directoryPath, $"{Name}.Test");
 
             // Ordner anlegen
             Directory.CreateDirectory(srcDirectory);
@@ -51,9 +51,9 @@ namespace Dataline.Tax.BmfPapConverter.CodeGen
                 File.WriteAllText(path, codeBuilder.ToString());
             }
 
-            // project.json schreiben
-            var projectJson = PrepareSkeleton(StaticCodeLoader.Load(StaticCodeLoader.ProjectSkeletonStaticCodeName));
-            File.WriteAllText(Path.Combine(srcDirectory, "project.json"), projectJson);
+            // csproj schreiben
+            var csproj = PrepareSkeleton(StaticCodeLoader.Load(StaticCodeLoader.ProjectSkeletonCsprojStaticCodeName));
+            File.WriteAllText(Path.Combine(srcDirectory, $"{Name}.csproj"), csproj);
 
             if (TestDataPaths != null && TestDataPaths.Length > 0)
             {
@@ -68,34 +68,37 @@ namespace Dataline.Tax.BmfPapConverter.CodeGen
                 string testClass = PrepareSkeleton(StaticCodeLoader.Load(StaticCodeLoader.TestSkeletonStaticCodeName));
                 File.WriteAllText(Path.Combine(testDirectory, "Test.cs"), testClass);
 
-                // project.json schreiben
-                var testProjectJson = PrepareSkeleton(StaticCodeLoader.Load(StaticCodeLoader.TestProjectSkeletonStaticCodeName));
-                File.WriteAllText(Path.Combine(testDirectory, "project.json"), testProjectJson);
+                // csproj schreiben
+                var testCsproj = PrepareSkeleton(StaticCodeLoader.Load(StaticCodeLoader.TestProjectSkeletonCsprojStaticCodeName));
+                File.WriteAllText(Path.Combine(testDirectory, $"{Name}.Test.csproj"), testCsproj);
             }
 
-            // global.json schreiben
-            var globalJson = PrepareSkeleton(StaticCodeLoader.Load(StaticCodeLoader.GlobalSkeletonStaticCodeName));
-            File.WriteAllText(Path.Combine(directoryPath, "global.json"), globalJson);
+            // Solution schreiben
+            var solution = PrepareSkeleton(StaticCodeLoader.Load(StaticCodeLoader.SolutionSkeletonStaticCodeName));
+            File.WriteAllText(Path.Combine(directoryPath, $"{Name}.sln"), solution);
         }
 
         private string PrepareSkeleton(string skeleton)
         {
-            string tagsContent = string.Join(", ", Tags.Select(t => $"\"{t.JsonEscaped()}\""));
+            string tagsContent = string.Join(", ", Tags.Select(t => t.XmlEscaped()));
 
-            return skeleton.Replace("%version%", Version.JsonEscaped())
-                .Replace("%author%", Author.JsonEscaped())
-                .Replace("%copyright%", Copyright.JsonEscaped())
-                .Replace("%description%", Description.JsonEscaped())
-                .Replace("%projectname%", Name.JsonEscaped())
-                .Replace("%tags%", tagsContent);
+            return skeleton.Replace("%version%", Version.XmlEscaped())
+                .Replace("%author%", Author.XmlEscaped())
+                .Replace("%copyright%", Copyright.XmlEscaped())
+                .Replace("%description%", Description.XmlEscaped())
+                .Replace("%projectname%", Name.XmlEscaped())
+                .Replace("%tags%", tagsContent)
+                .Replace("%guid.1%", Guid.NewGuid().ToString().ToUpper())
+                .Replace("%guid.2%", Guid.NewGuid().ToString().ToUpper())
+                .Replace("%guid.3%", Guid.NewGuid().ToString().ToUpper());
         }
     }
 
-    internal static class JsonStringExtensions
+    internal static class XmlStringExtensions
     {
-        public static string JsonEscaped(this string text)
+        public static string XmlEscaped(this string text)
         {
-            return text.Replace("\"", "\\\"");
+            return text.Replace("&", "&amp;").Replace("<", "&lt;").Replace(">", "&gt;").Replace("\"", "&quot;").Replace("'", "&apos;");
         }
     }
 }
