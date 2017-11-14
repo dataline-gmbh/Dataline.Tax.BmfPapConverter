@@ -1,20 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2008
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{DBFD0407-D3F6-4265-869E-E4C7E37C35AF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{35687029-2979-4692-8496-DEFDD3B2BE7D}"
-	ProjectSection(SolutionItems) = preProject
-		global.json = global.json
-	EndProjectSection
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Dataline.Tax.BmfPapConverter", "src\Dataline.Tax.BmfPapConverter\Dataline.Tax.BmfPapConverter.xproj", "{D94F815A-9556-45BF-9D8B-4923984F4C79}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dataline.Tax.BmfPapConverter", "src\Dataline.Tax.BmfPapConverter\Dataline.Tax.BmfPapConverter.csproj", "{D94F815A-9556-45BF-9D8B-4923984F4C79}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Dataline.Tax.BmfPapConverter.Test", "test\Dataline.Tax.BmfPapConverter.Test\Dataline.Tax.BmfPapConverter.Test.xproj", "{B72C1E08-F9D7-4BC5-9431-E8175898E514}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dataline.Tax.BmfPapConverter.Test", "test\Dataline.Tax.BmfPapConverter.Test\Dataline.Tax.BmfPapConverter.Test.csproj", "{B72C1E08-F9D7-4BC5-9431-E8175898E514}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Dataline.Tax.BmfPapConverter.Cmdlets", "src\Dataline.Tax.BmfPapConverter.Cmdlets\Dataline.Tax.BmfPapConverter.Cmdlets.xproj", "{EF07B490-D4CC-4354-8D79-93589999CC16}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dataline.Tax.BmfPapConverter.Cmdlets", "src\Dataline.Tax.BmfPapConverter.Cmdlets\Dataline.Tax.BmfPapConverter.Cmdlets.csproj", "{EF07B490-D4CC-4354-8D79-93589999CC16}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,5 +39,8 @@ Global
 		{D94F815A-9556-45BF-9D8B-4923984F4C79} = {DBFD0407-D3F6-4265-869E-E4C7E37C35AF}
 		{B72C1E08-F9D7-4BC5-9431-E8175898E514} = {DBFD0407-D3F6-4265-869E-E4C7E37C35AF}
 		{EF07B490-D4CC-4354-8D79-93589999CC16} = {DBFD0407-D3F6-4265-869E-E4C7E37C35AF}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {93483ED7-5FD3-48EA-A6C2-DD246A3A61BC}
 	EndGlobalSection
 EndGlobal
