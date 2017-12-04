@@ -7,8 +7,11 @@ Dieses Repository enthält PowerShell-Cmdlets, mit denen die [XML-Programmablauf
 
 Mit ```Convert-BmfPap``` kann ein Projekt erstellt werden; optional wird gleichzeitig ein Testprojekt erstellt, welches die erstellte Bibliothek mit Testdaten aus CSV-Dateien überprüft. Mit ```New-BmfTestData``` können Testdaten aus Lohnsteuer-Prüftabellen erzeugt werden.
 
+Das Buildskript ```Build.ps1``` erstellt alle Projekte automatisch. Mit dem ```-Test```-Parameter können gleichzeitig die Tests ausgeführt werden. Mit dem ```-Version```-Parameter wird die Versionsnummer der erzeugten Projekte festgelegt.
+
 ## Lohnsteuer NuGet-Pakete
 Mit BmfPapConverter erstellte LSt-Bibliotheken sind ebenfalls als NuGet-Paket verfügbar.
 
 * [![NuGet](https://img.shields.io/nuget/v/Dataline.Tax.LSt2016.svg)](https://www.nuget.org/packages/Dataline.Tax.LSt2016/) **LSt 2016**
 * [![NuGet](https://img.shields.io/nuget/v/Dataline.Tax.LSt2017.svg)](https://www.nuget.org/packages/Dataline.Tax.LSt2017/) **LSt 2017**
+* [![NuGet](https://img.shields.io/nuget/v/Dataline.Tax.LSt2018.svg)](https://www.nuget.org/packages/Dataline.Tax.LSt2018/) **LSt 2018**
