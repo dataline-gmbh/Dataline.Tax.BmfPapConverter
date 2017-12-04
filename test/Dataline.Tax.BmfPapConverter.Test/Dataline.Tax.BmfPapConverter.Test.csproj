@@ -2,11 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
-    <AssemblyName>Dataline.Tax.BmfPapConverter.Test</AssemblyName>
-    <PackageId>Dataline.Tax.BmfPapConverter.Test</PackageId>
-    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
-    <RuntimeFrameworkVersion>1.0.4</RuntimeFrameworkVersion>
-    <PackageTargetFallback>$(PackageTargetFallback);portable-net45+netcore45</PackageTargetFallback>
   </PropertyGroup>
 
   <ItemGroup>
