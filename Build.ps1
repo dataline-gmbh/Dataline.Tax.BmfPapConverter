@@ -3,8 +3,10 @@
 
 Param(
     [switch]$Test,
+    [switch]$Pack,
     [switch]$RebuildExisting,
-    [String]$Version="0.0.1"
+    [String]$Version="0.0.1",
+    [String]$PackOutput="dist"
 )
 
 $ErrorActionPreference = "Stop"
@@ -34,6 +36,7 @@ CheckExitCode
 $thisDir = Resolve-Path .
 $generatedDir = Join-Path -Path $thisDir -ChildPath "generated"
 $targetDir = Join-Path -Path $thisDir -ChildPath "data"
+$packDir = Join-Path -Path $thisDir -ChildPath $PackOutput
 
 if (!(Test-Path $generatedDir)) {
     New-Item -ItemType Directory -Path $generatedDir
@@ -63,5 +66,10 @@ foreach ($jahr in Get-ChildItem -Directory $targetDir) {
         Write-Progress -Activity $name -Status "Ausführung Testprojekt"
         dotnet test (Join-Path -Path $outDir -ChildPath "$name.Test\$name.Test.csproj")
         CheckExitCode
+    }
+
+    if ($Pack) {
+        Write-Progress -Activity $name -Status "Erstelle Paket"
+        dotnet pack -c Release -o $packDir (Join-Path -Path $outDir -ChildPath "$name\$name.csproj")
     }
 }
