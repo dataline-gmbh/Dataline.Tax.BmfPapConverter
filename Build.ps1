@@ -2,7 +2,8 @@
 # Generiert aus allen PAP in .\data Projekte, buildet sie und verschiebt sie in das Rootprojekt
 
 Param(
-    [switch]$Test
+    [switch]$Test,
+    [switch]$RebuildExisting
 )
 
 $ErrorActionPreference = "Stop"
@@ -35,17 +36,23 @@ $thisDir = Resolve-Path .
 $generatedDir = Join-Path -Path $thisDir -ChildPath "generated"
 $targetDir = Join-Path -Path $thisDir -ChildPath "data"
 
-if (Test-Path $generatedDir) {
-    Remove-Item -Recurse $generatedDir
+if (!(Test-Path $generatedDir)) {
+    New-Item -ItemType Directory -Path $generatedDir
 }
-    
-New-Item -ItemType Directory -Path $generatedDir
 
-foreach ($jahr in Get-ChildItem $targetDir) {
+foreach ($jahr in Get-ChildItem -Directory $targetDir) {
     $name = "Dataline.Tax.LSt$jahr"
     $currentDir = Join-Path -Path $targetDir -ChildPath $jahr
     $papPath = Join-Path -Path $currentDir -ChildPath "pap.xml"
     $outDir = Join-Path -Path $generatedDir -ChildPath $name
+
+    if (Test-Path $outDir) {
+        if (!$RebuildExisting) {
+            continue
+        }
+
+        Remove-Item -Recurse $outDir
+    }
 
     $testCsvs = Get-ChildItem (Join-Path -Path $currentDir -ChildPath "test-*.csv")
     
