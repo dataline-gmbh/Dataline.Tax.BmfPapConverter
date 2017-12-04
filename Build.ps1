@@ -3,12 +3,11 @@
 
 Param(
     [switch]$Test,
-    [switch]$RebuildExisting
+    [switch]$RebuildExisting,
+    [String]$Version="0.0.1"
 )
 
 $ErrorActionPreference = "Stop"
-
-$targetProjectVersion = "1.0.0"
 
 function Fail([string] $message)
 {
@@ -57,7 +56,7 @@ foreach ($jahr in Get-ChildItem -Directory $targetDir) {
     $testCsvs = Get-ChildItem (Join-Path -Path $currentDir -ChildPath "test-*.csv")
     
     Write-Progress -Activity $name -Status "Konvertiere PAP"
-    Convert-BmfPap -PapPath $papPath -OutputDirectory $outDir -Namespace $name -TestDataPaths $testCsvs -ProjectAuthor "DATALINE GmbH & Co. KG" -ProjectCopyright "2017 DATALINE GmbH & Co. KG" -ProjectDescription "BMF-PAP Lohnsteuerberechnung $jahr" -ProjectVersion $targetProjectVersion -ProjectTags "DATALINE", "$jahr"
+    Convert-BmfPap -PapPath $papPath -OutputDirectory $outDir -Namespace $name -TestDataPaths $testCsvs -ProjectAuthor "DATALINE GmbH & Co. KG" -ProjectCopyright "2017 DATALINE GmbH & Co. KG" -ProjectDescription "BMF-PAP Lohnsteuerberechnung $jahr" -ProjectVersion $Version -ProjectTags "DATALINE", "$jahr"
     CheckExitCode
 
     if ($Test -and $jahr.Name -ne "2014") { # Der PAP 2014 unterstützt das Testprojekt nicht
