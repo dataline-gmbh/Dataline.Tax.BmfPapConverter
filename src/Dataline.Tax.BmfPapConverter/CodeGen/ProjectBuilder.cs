@@ -51,6 +51,9 @@ namespace Dataline.Tax.BmfPapConverter.CodeGen
                 File.WriteAllText(path, codeBuilder.ToString());
             }
 
+            // packaging-Ordner schreiben
+            CreatePackaging(Path.Combine(srcDirectory, "packaging"));
+
             // csproj schreiben
             var csproj = PrepareSkeleton(StaticCodeLoader.Load(StaticCodeLoader.ProjectSkeletonCsprojStaticCodeName));
             File.WriteAllText(Path.Combine(srcDirectory, $"{Name}.csproj"), csproj);
@@ -91,6 +94,18 @@ namespace Dataline.Tax.BmfPapConverter.CodeGen
                 .Replace("%guid.1%", Guid.NewGuid().ToString().ToUpper())
                 .Replace("%guid.2%", Guid.NewGuid().ToString().ToUpper())
                 .Replace("%guid.3%", Guid.NewGuid().ToString().ToUpper());
+        }
+
+        private void CreatePackaging(string path)
+        {
+            Directory.CreateDirectory(path);
+
+            // _._ für das NuGet-Paket
+            File.Create(Path.Combine(path, "_._")).Dispose();
+
+            // Targets-Datei
+            string targets = PrepareSkeleton(StaticCodeLoader.Load(StaticCodeLoader.TargetsSkeletonStaticCodeName));
+            File.WriteAllText(Path.Combine(path, $"{Name}.targets"), targets);
         }
     }
 

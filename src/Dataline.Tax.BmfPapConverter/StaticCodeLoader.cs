@@ -16,6 +16,7 @@ namespace Dataline.Tax.BmfPapConverter
         public const string TestSkeletonStaticCodeName = "Dataline.Tax.BmfPapConverter.Resources.TestSkeleton.cs";
         public const string TestProjectSkeletonCsprojStaticCodeName = "Dataline.Tax.BmfPapConverter.Resources.TestProjectSkeleton.csproj";
         public const string SolutionSkeletonStaticCodeName = "Dataline.Tax.BmfPapConverter.Resources.SolutionSkeleton.sln";
+        public const string TargetsSkeletonStaticCodeName = "Dataline.Tax.BmfPapConverter.Resources.TargetsSkeleton.targets";
 
         public static string Load(string name)
         {

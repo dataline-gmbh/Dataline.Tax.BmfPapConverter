@@ -11,4 +11,15 @@
     <NoWarn>CS1591</NoWarn>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Include="packaging/%projectname%.targets" Link="build/native/%projectname%.targets">
+      <PackagePath>build/</PackagePath>
+      <Pack>true</Pack>
+    </None>
+    <None Include="packaging/_._" Link="lib/native/_._">
+      <PackagePath>lib/native/</PackagePath>
+      <Pack>true</Pack>
+    </None>
+  </ItemGroup>
+
 </Project>
