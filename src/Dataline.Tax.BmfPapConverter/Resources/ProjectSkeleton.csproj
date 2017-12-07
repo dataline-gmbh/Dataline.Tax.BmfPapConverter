@@ -13,7 +13,7 @@
 
   <ItemGroup>
     <None Include="packaging/%projectname%.targets" Link="build/native/%projectname%.targets">
-      <PackagePath>build/</PackagePath>
+      <PackagePath>build/native/</PackagePath>
       <Pack>true</Pack>
     </None>
     <None Include="packaging/_._" Link="lib/native/_._">
