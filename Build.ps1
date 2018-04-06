@@ -41,35 +41,52 @@ $packDir = Join-Path -Path $thisDir -ChildPath $PackOutput
 if (!(Test-Path $generatedDir)) {
     New-Item -ItemType Directory -Path $generatedDir
 }
+foreach ($taxTypeDir in Get-ChildItem -Directory $targetDir) {
+	$pjDir = Join-Path -Path $targetDir -ChildPath $taxTypeDir
+	
+	foreach ($jahr in Get-ChildItem -Directory $pjDir) {
+		$name = "Dataline.Tax.$taxTypeDir$jahr"
+		$currentDir = Join-Path -Path $pjDir -ChildPath $jahr
+		$papPath = Join-Path -Path $currentDir -ChildPath "pap.xml"
+		$outDir = Join-Path -Path $generatedDir -ChildPath $name
 
-foreach ($jahr in Get-ChildItem -Directory $targetDir) {
-    $name = "Dataline.Tax.LSt$jahr"
-    $currentDir = Join-Path -Path $targetDir -ChildPath $jahr
-    $papPath = Join-Path -Path $currentDir -ChildPath "pap.xml"
-    $outDir = Join-Path -Path $generatedDir -ChildPath $name
+		if (Test-Path $outDir) {
+			if (!$RebuildExisting) {
+				continue
+			}
 
-    if (Test-Path $outDir) {
-        if (!$RebuildExisting) {
-            continue
-        }
+			Remove-Item -Recurse $outDir
+		}
+		
+		$testCsvs = Get-ChildItem (Join-Path -Path $currentDir -ChildPath "test-*.csv")
+		
+		Write-Progress -Activity $name -Status "Konvertiere PAP"
+		Write-Output "Konvertiere PAP"
+		$discription = "Einkommensteuerberechnung"
+		if($taxTypeDir.Name -ge "LSt")
+		{
+			$discription = "Lohnsteuerberechnung"
+		}
+		
+		Convert-BmfPap -PapPath $papPath -OutputDirectory $outDir -Namespace $name -TestDataPaths $testCsvs -ProjectAuthor "DATALINE GmbH & Co. KG" -ProjectCopyright "2017 DATALINE GmbH & Co. KG" -ProjectDescription "BMF-PAP $discription $jahr" -ProjectVersion $Version -ProjectTags "DATALINE", "$jahr"
+		CheckExitCode
 
-        Remove-Item -Recurse $outDir
-    }
-
-    $testCsvs = Get-ChildItem (Join-Path -Path $currentDir -ChildPath "test-*.csv")
-    
-    Write-Progress -Activity $name -Status "Konvertiere PAP"
-    Convert-BmfPap -PapPath $papPath -OutputDirectory $outDir -Namespace $name -TestDataPaths $testCsvs -ProjectAuthor "DATALINE GmbH & Co. KG" -ProjectCopyright "2017 DATALINE GmbH & Co. KG" -ProjectDescription "BMF-PAP Lohnsteuerberechnung $jahr" -ProjectVersion $Version -ProjectTags "DATALINE", "$jahr"
-    CheckExitCode
-
-    if ($Test -and $jahr.Name -ne "2014") { # Der PAP 2014 unterstützt das Testprojekt nicht
-        Write-Progress -Activity $name -Status "Ausführung Testprojekt"
-        dotnet test (Join-Path -Path $outDir -ChildPath "$name.Test\$name.Test.csproj")
-        CheckExitCode
-    }
-
-    if ($Pack) {
-        Write-Progress -Activity $name -Status "Erstelle Paket"
-        dotnet pack -c Release -o $packDir (Join-Path -Path $outDir -ChildPath "$name\$name.csproj")
-    }
+		if($taxTypeDir.Name -ge "LSt")
+		{
+			if ($Test -and $jahr.Name -ne "2014") { # Der PAP 2014 unterstützt das Testprojekt nicht
+				Write-Progress -Activity $name -Status "Ausführung Testprojekt"
+				Write-Output "Ausführung Testprojekt"
+				dotnet test (Join-Path -Path $outDir -ChildPath "$name.Test\$name.Test.csproj")
+				CheckExitCode
+			}
+		}
+		
+		if ($Pack)
+		{
+			Write-Progress -Activity $name -Status "Erstelle Paket"
+			Write-Output "Erstelle Paket"
+			dotnet pack -c Release -o $packDir (Join-Path -Path $outDir -ChildPath "$name\$name.csproj")
+		}
+	}
 }
+
