@@ -15,3 +15,8 @@ Mit BmfPapConverter erstellte LSt-Bibliotheken sind ebenfalls als NuGet-Paket ve
 * [![NuGet](https://img.shields.io/nuget/v/Dataline.Tax.LSt2016.svg)](https://www.nuget.org/packages/Dataline.Tax.LSt2016/) **LSt 2016**
 * [![NuGet](https://img.shields.io/nuget/v/Dataline.Tax.LSt2017.svg)](https://www.nuget.org/packages/Dataline.Tax.LSt2017/) **LSt 2017**
 * [![NuGet](https://img.shields.io/nuget/v/Dataline.Tax.LSt2018.svg)](https://www.nuget.org/packages/Dataline.Tax.LSt2018/) **LSt 2018**
+* [![NuGet](https://img.shields.io/nuget/v/Dataline.Tax.ESt2015.svg)](https://www.nuget.org/packages/Dataline.Tax.ESt2015/) **ESt 2015**
+* [![NuGet](https://img.shields.io/nuget/v/Dataline.Tax.ESt201512.svg)](https://www.nuget.org/packages/Dataline.Tax.ESt201512/) **ESt 201512**
+* [![NuGet](https://img.shields.io/nuget/v/Dataline.Tax.ESt2016.svg)](https://www.nuget.org/packages/Dataline.Tax.ESt2016/) **ESt 2016**
+* [![NuGet](https://img.shields.io/nuget/v/Dataline.Tax.ESt2017.svg)](https://www.nuget.org/packages/Dataline.Tax.ESt2017/) **ESt 2017**
+* [![NuGet](https://img.shields.io/nuget/v/Dataline.Tax.ESt2018.svg)](https://www.nuget.org/packages/Dataline.Tax.ESt2018/) **ESt 2018**
