@@ -13,9 +13,8 @@
 /// <returns>Die tarifliche Einkommensteuer.</returns>
 public decimal TariflicheEinkommensteuer(decimal zve, int kztab)
 {
-    MPARA();
     KZTAB = kztab;
     X = Floor((zve / ((decimal)KZTAB)), 0);
-    UPTAB%yearshort%(); // yearshort-Makro muss definiert werden als die letzten zwei Stellen der Jahreszahl
+    UPTAB14();
     return ST;
 }

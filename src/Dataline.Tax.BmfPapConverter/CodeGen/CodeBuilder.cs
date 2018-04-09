@@ -30,12 +30,14 @@ namespace Dataline.Tax.BmfPapConverter.CodeGen
         };
 
         private readonly StringBuilder _code = new StringBuilder();
-        private readonly Stack<string> _separators = new Stack<string>(); 
+        private readonly Stack<string> _separators = new Stack<string>();
         private CodePositions _position = CodePositions.LineStart;
         private int _blockLevel = 0;
         private bool _insertSeparator = false;
 
         public int IndentationWidth { get; set; } = 4;
+
+        public Func<string, string> StaticCodeModifier { get; set; }
 
         public void AppendToken(string token, bool trim = true)
         {
@@ -175,6 +177,9 @@ namespace Dataline.Tax.BmfPapConverter.CodeGen
         public void AppendStaticCode(string code)
         {
             EndOfLineBlock();
+
+            if (StaticCodeModifier != null)
+                code = StaticCodeModifier(code);
 
             var lines = code.Split('\n').Select(c => c.TrimEnd());
 

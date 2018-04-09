@@ -51,6 +51,13 @@ namespace Dataline.Tax.BmfPapConverter
         /// </summary>
         public string[] Extensions { get; set; }
 
+        /// <summary>
+        /// Das optionale Zieljahr. Dieses wird verwendet, um spezifische Versionen der <see cref="Extensions"/>
+        /// auszuwählen. Hierbei wird zuerst nach "Extension_(Name)_(Jahr).cs" und dann nach "Extension_(Name).cs"
+        /// gesucht.
+        /// </summary>
+        public string Year { get; set; }
+
         public ProjectBuilder GenerateProject(PapDocument document)
         {
             var inputClass = new ModuleBuilder(ModuleBuilder.ModuleTypes.Class, Visibilities.Public, InputClassName);
@@ -178,7 +185,7 @@ namespace Dataline.Tax.BmfPapConverter
             // Der PAP beschreibt auch Eingangsparameter, deshalb leider keine Getter-Only Properties möglich
             GenerateOperationalAccessors(target, InputClassName, variables);
         }
-        
+
         private void GenerateOperationalOutputAccessors(ModuleBuilder target, IEnumerable<PapVariable> variables)
         {
             // Accessors für die Ausgangsparameter erzeugen
@@ -205,9 +212,9 @@ namespace Dataline.Tax.BmfPapConverter
 
         private void GenerateExtensions(ModuleBuilder target)
         {
-            foreach (string extension in Extensions ?? new string[] {})
+            foreach (string extension in Extensions ?? Array.Empty<string>())
             {
-                string extCode = StaticCodeLoader.Load(StaticCodeLoader.ExtensionStaticCodeName(extension));
+                string extCode = StaticCodeLoader.Load(StaticCodeLoader.ExtensionStaticCodeName(extension, Year));
                 target.StaticCode.Add(extCode);
             }
         }

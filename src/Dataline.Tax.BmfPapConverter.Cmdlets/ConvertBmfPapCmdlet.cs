@@ -3,6 +3,8 @@
 // See LICENSE in the project root for license information.
 // </copyright>
 
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Management.Automation;
@@ -18,6 +20,9 @@ namespace Dataline.Tax.BmfPapConverter.Cmdlets
 
         [Parameter(Mandatory = true, HelpMessage = "Ausgabeverzeichnis des Projekts")]
         public DirectoryInfo OutputDirectory { get; set; }
+
+        [Parameter(Mandatory = true, HelpMessage = "Das Zieljahr der Konvertierung")]
+        public string Year { get; set; }
 
         [Parameter(HelpMessage = "Name der Eingabeklasse")]
         public string InputClassName { get; set; } = "Eingabeparameter";
@@ -58,6 +63,9 @@ namespace Dataline.Tax.BmfPapConverter.Cmdlets
         [Parameter(HelpMessage = "Die gewünschten Erweiterungen der Berechnungsklasse")]
         public string[] Extensions { get; set; }
 
+        [Parameter(HelpMessage = "Eigene Makros, die bei der Erstellung des Projekts aufgelöst werden")]
+        public string[] Macros { get; set; }
+
         protected override void ProcessRecord()
         {
             XDocument pap;
@@ -76,7 +84,8 @@ namespace Dataline.Tax.BmfPapConverter.Cmdlets
                 OperationClassName = OperationClassName,
                 OperationMainMethodName = OperationMainMethodName,
                 Namespace = Namespace,
-                Extensions = Extensions
+                Extensions = Extensions,
+                Year = Year
             };
 
             if (!string.IsNullOrEmpty(FileHeader))
@@ -97,13 +106,33 @@ namespace Dataline.Tax.BmfPapConverter.Cmdlets
                 project.Tags.AddRange(ProjectTags);
             if (TestDataPaths != null)
                 project.TestDataPaths = TestDataPaths.Select(f => SessionState.Path.GetUnresolvedProviderPathFromPSPath(f)).ToArray();
-            
+
+            project.CustomMacros = Macros?.AsKeyValuePairs().ToArray();
+
             if (!OutputDirectory.Exists)
             {
                 OutputDirectory.Create();
             }
 
             project.SaveToDirectory(OutputDirectory.FullName);
+        }
+    }
+
+    internal static class LinqExtensions
+    {
+        public static IEnumerable<KeyValuePair<T, T>> AsKeyValuePairs<T>(this IEnumerable<T> enumerable)
+        {
+            using (var enumerator = enumerable.GetEnumerator())
+            {
+                while (enumerator.MoveNext())
+                {
+                    var key = enumerator.Current;
+                    if (!enumerator.MoveNext())
+                        throw new InvalidOperationException("Es ist eine ungerade Anzahl an Elementen für die Key-Value-Liste vorhanden.");
+
+                    yield return new KeyValuePair<T, T>(key, enumerator.Current);
+                }
+            }
         }
     }
 }

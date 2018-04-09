@@ -28,6 +28,8 @@ namespace Dataline.Tax.BmfPapConverter.CodeGen
 
         public string[] TestDataPaths { get; set; }
 
+        public KeyValuePair<string, string>[] CustomMacros { get; set; }
+
         public void SaveToDirectory(string directoryPath)
         {
             if (string.IsNullOrEmpty(Name))
@@ -45,7 +47,8 @@ namespace Dataline.Tax.BmfPapConverter.CodeGen
             {
                 string path = Path.Combine(srcDirectory, sourceBuilder.Name);
 
-                var codeBuilder = new CodeBuilder();
+                var codeBuilder = new CodeBuilder { StaticCodeModifier = PrepareSkeleton };
+
                 sourceBuilder.CodeGen(codeBuilder);
 
                 File.WriteAllText(path, codeBuilder.ToString());
@@ -85,7 +88,7 @@ namespace Dataline.Tax.BmfPapConverter.CodeGen
         {
             string tagsContent = string.Join(", ", Tags.Select(t => t.XmlEscaped()));
 
-            return skeleton.Replace("%version%", Version.XmlEscaped())
+            string content = skeleton.Replace("%version%", Version.XmlEscaped())
                 .Replace("%author%", Author.XmlEscaped())
                 .Replace("%copyright%", Copyright.XmlEscaped())
                 .Replace("%description%", Description.XmlEscaped())
@@ -94,6 +97,16 @@ namespace Dataline.Tax.BmfPapConverter.CodeGen
                 .Replace("%guid.1%", Guid.NewGuid().ToString().ToUpper())
                 .Replace("%guid.2%", Guid.NewGuid().ToString().ToUpper())
                 .Replace("%guid.3%", Guid.NewGuid().ToString().ToUpper());
+
+            if (CustomMacros != null)
+            {
+                foreach (var macroPair in CustomMacros)
+                {
+                    content = content.Replace($"%{macroPair.Key}%", macroPair.Value);
+                }
+            }
+
+            return content;
         }
 
         private void CreatePackaging(string path)
