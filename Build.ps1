@@ -43,24 +43,25 @@ if (!(Test-Path $generatedDir)) {
 }
 
 foreach ($jahr in Get-ChildItem -Directory $targetDir) {
+    $jahrKurz = $jahr.Name.Substring(2, 2)
     $name = "Dataline.Tax.LSt$jahr"
     $currentDir = Join-Path -Path $targetDir -ChildPath $jahr
     $papPath = Join-Path -Path $currentDir -ChildPath "pap.xml"
     $outDir = Join-Path -Path $generatedDir -ChildPath $name
 
-    if (Test-Path $outDir) {
-        if (!$RebuildExisting) {
-            continue
+    $outExists = Test-Path $outDir
+
+    if ($RebuildExisting -or -not $outExists) {
+        if ($outExists) {
+            Remove-Item -Recurse $outDir
         }
 
-        Remove-Item -Recurse $outDir
-    }
-
-    $testCsvs = Get-ChildItem (Join-Path -Path $currentDir -ChildPath "test-*.csv")
+        $testCsvs = Get-ChildItem (Join-Path -Path $currentDir -ChildPath "test-*.csv")
     
-    Write-Progress -Activity $name -Status "Konvertiere PAP"
-    Convert-BmfPap -PapPath $papPath -OutputDirectory $outDir -Namespace $name -TestDataPaths $testCsvs -ProjectAuthor "DATALINE GmbH & Co. KG" -ProjectCopyright "2017 DATALINE GmbH & Co. KG" -ProjectDescription "BMF-PAP Lohnsteuerberechnung $jahr" -ProjectVersion $Version -ProjectTags "DATALINE", "$jahr"
-    CheckExitCode
+        Write-Progress -Activity $name -Status "Konvertiere PAP"
+        Convert-BmfPap -PapPath $papPath -Year $jahr.Name -OutputDirectory $outDir -Namespace $name -TestDataPaths $testCsvs -ProjectAuthor "DATALINE GmbH & Co. KG" -ProjectCopyright "$((Get-Date).Year) DATALINE GmbH & Co. KG" -ProjectDescription "BMF-PAP Lohnsteuerberechnung $jahr" -ProjectVersion $Version -ProjectTags "DATALINE", "$jahr" -Extensions "TariflicheEinkommensteuer" -Macros "yearshort", $jahrKurz
+        CheckExitCode
+    }
 
     if ($Test -and $jahr.Name -ne "2014") { # Der PAP 2014 unterstützt das Testprojekt nicht
         Write-Progress -Activity $name -Status "Ausführung Testprojekt"
