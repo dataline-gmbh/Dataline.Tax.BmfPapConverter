@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dataline.Tax.BmfPapConverte
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dataline.Tax.BmfPapConverter.Cmdlets", "src\Dataline.Tax.BmfPapConverter.Cmdlets\Dataline.Tax.BmfPapConverter.Cmdlets.csproj", "{EF07B490-D4CC-4354-8D79-93589999CC16}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dataline.Tax.BmfEstTestDataGenerator", "src\Dataline.Tax.BmfEstTestDataGenerator\Dataline.Tax.BmfEstTestDataGenerator.csproj", "{D8BEF0D5-9042-4405-8F4A-D5AE7D00F89B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,10 @@ Global
 		{EF07B490-D4CC-4354-8D79-93589999CC16}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF07B490-D4CC-4354-8D79-93589999CC16}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF07B490-D4CC-4354-8D79-93589999CC16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8BEF0D5-9042-4405-8F4A-D5AE7D00F89B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8BEF0D5-9042-4405-8F4A-D5AE7D00F89B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8BEF0D5-9042-4405-8F4A-D5AE7D00F89B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8BEF0D5-9042-4405-8F4A-D5AE7D00F89B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -39,6 +45,7 @@ Global
 		{D94F815A-9556-45BF-9D8B-4923984F4C79} = {DBFD0407-D3F6-4265-869E-E4C7E37C35AF}
 		{B72C1E08-F9D7-4BC5-9431-E8175898E514} = {DBFD0407-D3F6-4265-869E-E4C7E37C35AF}
 		{EF07B490-D4CC-4354-8D79-93589999CC16} = {DBFD0407-D3F6-4265-869E-E4C7E37C35AF}
+		{D8BEF0D5-9042-4405-8F4A-D5AE7D00F89B} = {DBFD0407-D3F6-4265-869E-E4C7E37C35AF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {93483ED7-5FD3-48EA-A6C2-DD246A3A61BC}
