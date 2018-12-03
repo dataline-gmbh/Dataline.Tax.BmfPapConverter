@@ -21,3 +21,4 @@ Mit BmfPapConverter erstellte LSt-Bibliotheken sind ebenfalls als NuGet-Paket ve
 * [![NuGet](https://img.shields.io/nuget/v/Dataline.Tax.LSt2016.svg)](https://www.nuget.org/packages/Dataline.Tax.LSt2016/) **LSt 2016**
 * [![NuGet](https://img.shields.io/nuget/v/Dataline.Tax.LSt2017.svg)](https://www.nuget.org/packages/Dataline.Tax.LSt2017/) **LSt 2017**
 * [![NuGet](https://img.shields.io/nuget/v/Dataline.Tax.LSt2018.svg)](https://www.nuget.org/packages/Dataline.Tax.LSt2018/) **LSt 2018**
+* [![NuGet](https://img.shields.io/nuget/v/Dataline.Tax.LSt2019.svg)](https://www.nuget.org/packages/Dataline.Tax.LSt2019/) **LSt 2019**
