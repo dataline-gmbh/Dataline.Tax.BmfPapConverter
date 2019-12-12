@@ -30,7 +30,7 @@ CheckExitCode
 
 Write-Progress -Activity "Vorbereitung" -Status "Importiere Modul"
 
-Import-Module ".\src\Dataline.Tax.BmfPapConverter.Cmdlets\bin\Release\net46\Dataline.Tax.BmfPapConverter.Cmdlets.dll"
+Import-Module ".\src\Dataline.Tax.BmfPapConverter.Cmdlets\bin\Release\net472\Dataline.Tax.BmfPapConverter.Cmdlets.dll"
 CheckExitCode
 
 $thisDir = Resolve-Path .
