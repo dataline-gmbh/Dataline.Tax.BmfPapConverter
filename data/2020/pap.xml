@@ -1,7 +1,7 @@
 <PAP name="Lohnsteuer2020Big" version="1.0" versionNummer="1.0">   
     <VARIABLES> 
-		<!-- Stand: 2020-12-12 -->
-		<!-- Dataline GmbH & Co. KG--> 
+		<!-- Stand: 2019-11-29 -->
+		<!-- ITZBund Düsseldorf--> 
 
    		 <!--  EINGABEPARAMETER  -->
         <INPUTS>
@@ -258,7 +258,7 @@
 		        <!-- Beitragsbemessungsgrenze in der gesetzlichen Krankenversicherung 
 		        	und der sozialen Pflegeversicherung in Euro -->
 		        <INTERNAL name="BBGKVPV" type="BigDecimal" default="new BigDecimal(0)"/>
-		        <!--  Nach Programmablaufplan 2020 -->
+		        <!--  Nach Programmablaufplan 2019 -->
 		        <INTERNAL name="bd" type="BigDecimal" default="new BigDecimal(0)"/>
 		        <!-- allgemeine Beitragsbemessungsgrenze in der allgemeinen Renten-versicherung in Euro -->
 		        <INTERNAL name="BBGRV" type="BigDecimal" default="new BigDecimal(0)"/>
@@ -609,7 +609,7 @@
 	        		<EVAL exec="BBGRV = new BigDecimal(77400)"/>  <!-- Neu 2020 -->
 	      		</ELSE>
       		</IF>
-      		<EVAL exec="RVSATZAN = BigDecimal.valueOf(0.093)"/> 
+      		<EVAL exec="RVSATZAN = BigDecimal.valueOf(0.093)"/> <!-- Neu 2019 -->
       		<EVAL exec="TBSVORV = BigDecimal.valueOf(0.8)"/>  <!-- Neu 2020 -->
       	</THEN>
       	<ELSE>
@@ -618,18 +618,18 @@
      </IF>
        
        	<EVAL exec="BBGKVPV = new BigDecimal(56250)"/> <!-- Neu 2020 -->
-       	<EVAL exec="bd = new BigDecimal(2)"/>
-      	<EVAL exec="KVSATZAN = (KVZ.divide(bd).divide(ZAHL100)).add(BigDecimal.valueOf(0.07))"/>
-      	<EVAL exec="KVSATZAG = BigDecimal.valueOf(0.0045+0.07)"/>
+       	<EVAL exec="bd = new BigDecimal(2)"/><!-- Neu 2019 -->
+      	<EVAL exec="KVSATZAN = (KVZ.divide(bd).divide(ZAHL100)).add(BigDecimal.valueOf(0.07))"/><!-- Neu 2019 -->
+      	<EVAL exec="KVSATZAG = BigDecimal.valueOf(0.0055+0.07)"/><!-- Neu 2020 -->
       	
       	<IF expr="PVS == 1">
       		<THEN>
-      			<EVAL exec="PVSATZAN = BigDecimal.valueOf(0.02025)"/> 
-      			<EVAL exec="PVSATZAG = BigDecimal.valueOf(0.01025)"/> 
+      			<EVAL exec="PVSATZAN = BigDecimal.valueOf(0.02025)"/> <!-- Neu 2019 -->
+      			<EVAL exec="PVSATZAG = BigDecimal.valueOf(0.01025)"/> <!-- Neu 2019 -->
       		</THEN>
       		<ELSE>
-        		<EVAL exec="PVSATZAN =  BigDecimal.valueOf(0.01525)"/> 
-        		<EVAL exec="PVSATZAG =  BigDecimal.valueOf(0.01525)"/> 
+        		<EVAL exec="PVSATZAN =  BigDecimal.valueOf(0.01525)"/> <!-- Neu 2019 -->
+        		<EVAL exec="PVSATZAG =  BigDecimal.valueOf(0.01525)"/> <!-- Neu 2019 -->
       		</ELSE>
       	</IF>
       	<IF expr="PVZ == 1">
@@ -1418,29 +1418,29 @@
         <EVAL exec="ST= BigDecimal.ZERO"/>
       </THEN>
       <ELSE>
-        <IF expr="X.compareTo (BigDecimal.valueOf (14533)) == -1">
+        <IF expr="X.compareTo (BigDecimal.valueOf (14533)) == -1"><!-- neu seit 2020 -->
           <THEN>
             <EVAL exec="Y = (X.subtract(GFB)).divide(ZAHL10000, 6,BigDecimal.ROUND_DOWN)"/> 
-            <EVAL exec="RW= Y.multiply (BigDecimal.valueOf (972.87))"/> 
+            <EVAL exec="RW= Y.multiply (BigDecimal.valueOf (972.87))"/> <!-- neu seit 2020 -->
             <EVAL exec="RW= RW.add (BigDecimal.valueOf (1400))"/>
             <EVAL exec="ST= (RW.multiply (Y)).setScale (0, BigDecimal.ROUND_DOWN)"/>
           </THEN>
           <ELSE>
-            <IF expr="X.compareTo (BigDecimal.valueOf (57052)) == -1">
+            <IF expr="X.compareTo (BigDecimal.valueOf (57052)) == -1"><!-- neu seit 2020 -->
               <THEN>
                 <EVAL exec="Y= (X.subtract (BigDecimal.valueOf (14532))).divide (ZAHL10000, 6, BigDecimal.ROUND_DOWN)"/>
-                <EVAL exec="RW= Y.multiply (BigDecimal.valueOf (212.02))"/>
+                <EVAL exec="RW= Y.multiply (BigDecimal.valueOf (212.02))"/><!-- neu seit 2020 -->
                 <EVAL exec="RW= RW.add (BigDecimal.valueOf (2397))"/>
                 <EVAL exec="RW= RW.multiply (Y)"/>
-                <EVAL exec="ST= (RW.add (BigDecimal.valueOf (972.79))).setScale (0, BigDecimal.ROUND_DOWN)"/> 
+                <EVAL exec="ST= (RW.add (BigDecimal.valueOf (972.79))).setScale (0, BigDecimal.ROUND_DOWN)"/> <!-- neu seit 2020 -->
               </THEN>
               <ELSE>
-	            <IF expr="X.compareTo (BigDecimal.valueOf (270501)) == -1">
+	            <IF expr="X.compareTo (BigDecimal.valueOf (270501)) == -1"><!-- neu seit 2020 -->
 	              <THEN>
-                    <EVAL exec="ST= ((X.multiply (BigDecimal.valueOf (0.42))).subtract (BigDecimal.valueOf (8963.74))).setScale (0, BigDecimal.ROUND_DOWN)"/> 
+                    <EVAL exec="ST= ((X.multiply (BigDecimal.valueOf (0.42))).subtract (BigDecimal.valueOf (8963.74))).setScale (0, BigDecimal.ROUND_DOWN)"/> <!-- neu seit 2020 -->
                   </THEN>
                   <ELSE>
-                    <EVAL exec="ST= ((X.multiply (BigDecimal.valueOf (0.45))).subtract (BigDecimal.valueOf (17078.74))).setScale (0, BigDecimal.ROUND_DOWN)"/> 
+                    <EVAL exec="ST= ((X.multiply (BigDecimal.valueOf (0.45))).subtract (BigDecimal.valueOf (17078.74))).setScale (0, BigDecimal.ROUND_DOWN)"/> <!-- neu seit 2020 -->
                   </ELSE>
                 </IF>
               </ELSE>
