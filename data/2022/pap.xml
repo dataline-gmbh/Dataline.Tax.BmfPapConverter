@@ -1,7 +1,7 @@
 ﻿<PAP name="Lohnsteuer2022Big" version="1.0" versionNummer="1.0">   
     <VARIABLES> 
-		<!-- Stand: 2021-10-25 -->
-		<!-- ITZBund Berlin--> 
+		<!-- Stand: 2021-11-09 10:25-->
+		<!-- ITZBund Berlin --> 
 
    		 <!--  EINGABEPARAMETER  -->
         <INPUTS>
@@ -1344,11 +1344,11 @@
     </IF>
   </METHOD>
 
-  <!-- Neu für 2022    Dummy, TODO -->
+  <!-- Neu für 2022 -->
   <METHOD name="STSMIN">
   
 
-	<IF expr = "STS.compareTo(BigDecimal.ZERO) == -1"> <!-- STS < 0 -->>
+	<IF expr = "STS.compareTo(BigDecimal.ZERO) == -1"> <!-- STS < 0 -->
 	    <THEN>			
 			<IF expr = "MBV.compareTo(BigDecimal.ZERO) == 0" > <!--  MBV = 0  -->
 				<THEN>
@@ -1370,7 +1370,7 @@
 						<THEN>
 							<EVAL exec = "SOLZLZZ = BigDecimal.ZERO" />
 						</THEN>
-				    </IF>>
+				    </IF>
 
 					<EVAL exec = "BK = BK.add(STS)" />
 					
@@ -1396,7 +1396,7 @@
 			
 	<IF expr = "R > 0">
 		<THEN>
-			<EVAL exec = "BKS = BigDecimal.valueOf(STS.doubleValue())" /> 
+			<EVAL exec = "BKS = STS" /> 
 		</THEN>
 		<ELSE>
 			<EVAL exec = "BKS = BigDecimal.ZERO" />
