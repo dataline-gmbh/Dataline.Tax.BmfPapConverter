@@ -91,6 +91,10 @@ namespace %projectname%.Test
                 ENTSCH = decimal.Parse(line["ENTSCH"], _culture)
             };
 
+            // der Parameter MBV wurde 2022 hinzugefügt; Legacy-Variante eingebaut
+            if (line.ContainsKey("MBV"))
+                ((dynamic)e).MBV = decimal.Parse(line["MBV"], _culture);
+
             var berechnung = new Berechnung(e);
             berechnung.Lohnsteuer();
 
