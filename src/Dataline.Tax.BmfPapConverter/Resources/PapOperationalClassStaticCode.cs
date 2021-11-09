@@ -20,11 +20,19 @@ private static readonly decimal[] RoundingFactorsNegative = Enumerable.Range(0, 
 
 private static decimal Calc(decimal value, int decimals, Func<decimal, decimal> fn)
 {
+    int vorz = value < 0 ? -1 : 1; // *1) 
+    value *= vorz; // *1)
+
     var factor = decimals >= 0 ? RoundingFactorsPositive[decimals] : RoundingFactorsNegative[-decimals];
     value *= factor;
     value = fn(value);
     value /= factor;
+
+    value *= vorz; // *1)
     return value;
+
+    // *1) wegen des Replizierens der Java-Rundungsmethode, die immer von Null weg rundet, bzw. zu Null hin rundet.
+    // Wir können unter net45 noch nicht das neue MidPointRounding-Member "ToZero" nutzen.
 }
 
 private static decimal Ceiling(decimal value, int decimals)
