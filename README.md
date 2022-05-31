@@ -30,26 +30,35 @@ Mit BmfPapConverter erstellte LSt-Bibliotheken sind ebenfalls als NuGet-Paket ve
 * [![NuGet](https://img.shields.io/nuget/v/Dataline.Tax.LSt2017.svg)](https://www.nuget.org/packages/Dataline.Tax.LSt2017/) **LSt 2017**
 * [![NuGet](https://img.shields.io/nuget/v/Dataline.Tax.LSt2018.svg)](https://www.nuget.org/packages/Dataline.Tax.LSt2018/) **LSt 2018**
 * [![NuGet](https://img.shields.io/nuget/v/Dataline.Tax.LSt2019.svg)](https://www.nuget.org/packages/Dataline.Tax.LSt2019/) **LSt 2019**
-* [![NuGet](https://img.shields.io/nuget/v/Dataline.Tax.LSt2020.svg)](https://www.nuget.org/packages/Dataline.Tax.LSt2020/) **LSt 2020**
-* [![NuGet](https://img.shields.io/nuget/v/Dataline.Tax.LSt2021.svg)](https://www.nuget.org/packages/Dataline.Tax.LSt2021/) **LSt 2021**
-* [![NuGet](https://img.shields.io/nuget/v/Dataline.Tax.LSt2022.svg)](https://www.nuget.org/packages/Dataline.Tax.LSt2022/) **LSt 2022**
+* **ab hier wurden die Pakete nicht mehr auf Nuget.org veröffentlicht**
+* ![NuGet](https://img.shields.io/badge/nuget-v2.2.4-blue) **LSt 2020** 
+* ![NuGet](https://img.shields.io/badge/nuget-v2.2.5-blue) **LSt 2021** 
+* ![NuGet](https://img.shields.io/badge/nuget-v2.2.6-blue) **LSt 2022** 
+* ![NuGet](https://img.shields.io/badge/nuget-v2.2.7-blue) **LSt 2022/06**
 
 
 ## Erstellung der Testdaten
-Der erste Schritt ist die Erstellung eines neuen Data-Ordners für das betreffende Jahr. Die alten Data-Ordner können in 20xx-old umbenannt werden. In diesen Data-Ordner gehören die Dateien
+Der erste Schritt ist die Erstellung eines neuen Data-Ordners für das betreffende Jahr. In diesen Data-Ordner gehören die Dateien
 * pap.xml
 * test-allgemein.csv
 * test-besondere.csv
 * test-maschinell.csv
 
-Die Datei pap.xml ist die neue Pseudo-XML-Datei vom Bundesministerium der Finanzen, die auf der o.g. Internetseite veröffentlicht wird.
+Die alten Data-Ordner sollten in 20xx-old umbenannt werden, damit keine neue Artefakte erstellt werden. 
 
-Die Testdaten test-maschinell.csv entstammt der zum XML-Pseudocode hinzugefügten xlsx-Datei. Aus dieser werden alle Zeilen incl. der Überschriftzeile als csv-Datei exportiert.
+Die Datei **pap.xml** ist die neue Pseudo-XML-Datei vom Bundesministerium der Finanzen, die auf der o.g. Internetseite veröffentlicht wird. Diese sollte so wie sie ist in das Verzeichnis kopiert werden.
 
-Die Testdaten test-allgemein.csv und test-besondere.csv basieren auf den Tabellen, die sich am Ende des PDFs des maschinellen Programmablaufplans des BMF befinden. 
+Die Testdaten **test-maschinell.csv** entstammt der zum XML-Pseudocode hinzugefügten xlsx-Datei. Aus dieser werden alle Zeilen incl. der Überschriftzeile als csv-Datei exportiert. Dazu einfach als csv-Datei speichern.
+
+Die Testdaten **test-allgemein.csv** und **test-besondere.csv** basieren auf den Tabellen, die sich am Ende des PDFs des maschinellen Programmablaufplans des BMF befinden. 
 Zum Erstellen der Dateien müssen die Werte aus den Tabellen kopiert werden und in ein importierbares Format umgewandelt werden. Dazu werden zuerst alle Punkte entfernt und danach alle Leerzeichen durch Kommas ersetzt.
-Danach wird jede Zeile in () gesetzt, zum Schluss wird alles von () umschlossen. Diese Datei kann dann als Parameter an das Cmdlet übergeben werden.
+Danach wird jede Zeile in () gesetzt, mit einem Komma von der nächsten getrennt, zum Schluss wird alles von () umschlossen. 
+Diese Datei muss dann mit Hilfe des Cmdlets in dasselbe Format wie die Datei test-maschinell umgewandelt werden. Dazu wird der Inhalt als Parameter übergeben.
 
-Die Konvertierung erfolgt dann mithilfe des Cmdlets.  
-Beispiel: New-BmfTestData -Type Allgemein -Table ((5000,0,0,0,0,470,616), ...)  
-Danach wird noch der Parameter KVZ abgefragt, dessen Wert ebenfalls am Ende des PDFs vom maschinellen Programmablaufplan befindet. Ebenso wird das Ausgabeverzeichnis für die zu erstellende Datei abgefragt.
+Beispiel: New-BmfTestData -Type Allgemein -Table ((5000,0,0,0,0,470,616), ...)
+  
+Danach wird noch der Parameter KVZ abgefragt, dessen Wert sich ebenfalls im PDF vom maschinellen Programmablaufplan unterhalb der allgemeinen Tabelle befindet. Ebenso wird das Ausgabeverzeichnis für die zu erstellende Datei abgefragt.
+
+**intern**
+
+Nachdem diese 4 Dateien vorliegen, erledigt der Build-Server den Rest; man muss "nur" noch das Projekt in den master auf Github mergen, und dann die Erstellung auf TeamCity anstoßen. Als Ergebnis erhalten wir das gewünschte neue Nuget-Paket, dass wir im Server installieren müssen (Achtung bei der Quelle: dataline-alt!)
