@@ -6,7 +6,7 @@
     <Description>%description%</Description>
     <Copyright>Copyright © %copyright%</Copyright>
     <Tags>%tags%</Tags>
-    <TargetFrameworks>net45;netstandard1.3</TargetFrameworks>
+    <TargetFrameworks>net462;netstandard1.3</TargetFrameworks>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <NoWarn>CS1591</NoWarn>
   </PropertyGroup>
