@@ -1,6 +1,6 @@
-﻿<PAP name="Lohnsteuer2024" version="1.0" versionNummer="1.0">   
+﻿<PAP name="Lohnsteuer2024Big" version="1.0" versionNummer="1.0">   
     <VARIABLES> 
-		<!-- Stand: 2024-02-05 15:05-->
+		<!-- Stand: 2023-11-16 14:40-->
 		<!-- ITZBund Berlin --> 
 
    		 <!--  EINGABEPARAMETER  -->
@@ -27,13 +27,13 @@
 	        <!-- Jahresfreibetrag für die Ermittlung der Lohnsteuer für die sonstigen Bezüge 
 	             sowie für Vermögensbeteiligungen nach § 19a Absatz 1 und 4 EStG nach Maßgabe der 
 	             elektronischen Lohnsteuerabzugsmerkmale nach § 39e EStG oder der Eintragung 
-	             auf der Bescheinigung für den Lohnsteuerabzug 2023 in Cent (ggf. 0) -->
+	             auf der Bescheinigung für den Lohnsteuerabzug 2024 in Cent (ggf. 0) -->
 	        <INPUT name="JFREIB" type="BigDecimal"/>
 	
 	        <!-- Jahreshinzurechnungsbetrag für die Ermittlung der Lohnsteuer für die sonstigen Bezüge
 	             sowie für Vermögensbeteiligungen nach § 19a Absatz 1 und 4 EStG nach Maßgabe der 
 	             elektronischen Lohnsteuerabzugsmerkmale nach § 39e EStG oder der Eintragung auf der 
-	             Bescheinigung für den Lohnsteuerabzug 2023 in Cent (ggf. 0) -->
+	             Bescheinigung für den Lohnsteuerabzug 2024 in Cent (ggf. 0) -->
 	        <INPUT name="JHINZU" type="BigDecimal"/>
 	
 	        <!-- Voraussichtlicher Jahresarbeitslohn ohne sonstige Bezüge (d.h. auch ohne Vergütung 
@@ -75,12 +75,12 @@
 	        <INPUT name="LZZ" type="int"/>
 	
 	        <!-- Der als elektronisches Lohnsteuerabzugsmerkmal für den Arbeitgeber nach § 39e EStG festgestellte 
-	             oder in der Bescheinigung für den Lohnsteuerabzug 2023 eingetragene Freibetrag für den 
+	             oder in der Bescheinigung für den Lohnsteuerabzug 2024 eingetragene Freibetrag für den 
 	             Lohnzahlungszeitraum in Cent -->
 	        <INPUT name="LZZFREIB" type="BigDecimal"/>
 	
 	        <!-- Der als elektronisches Lohnsteuerabzugsmerkmal für den Arbeitgeber nach § 39e EStG festgestellte 
-	             oder in der Bescheinigung für den Lohnsteuerabzug 2023 eingetragene Hinzurechnungsbetrag für den
+	             oder in der Bescheinigung für den Lohnsteuerabzug 2024 eingetragene Hinzurechnungsbetrag für den
 	             Lohnzahlungszeitraum in Cent -->
 	        <INPUT name="LZZHINZU" type="BigDecimal"/>
 	
@@ -108,22 +108,14 @@
 	        	 	zu zahlen hat, sonst 0. -->
 	        <INPUT name="PVZ" type="int" default="0"/>
 	        
-	        <!-- Zahl der beim Arbeitnehmer zu berücksichtigenden Beitragsabschläge der sozialen Pflegeversicherung bei mehr als einem Kind 
-				 0 = kein Abschlag
-				 1 = Beitragsabschlag für das 2. Kind
-				 2 = Beitragsabschläge für das 2. und 3. Kind
-				 3 = Beitragsabschläge für 2. bis 4. Kinder
-				 4 = Beitragsabschläge für 2. bis 5. oder mehr Kinder -->
-	        <INPUT name="PVA" type="BigDecimal" default="0"/>
-
 	        <!-- Religionsgemeinschaft des Arbeitnehmers lt. elektronischer Lohnsteuerabzugsmerkmale oder der 
-	             Bescheinigung für den Lohnsteuerabzug 2023 (bei keiner Religionszugehörigkeit = 0) -->
+	             Bescheinigung für den Lohnsteuerabzug 2024 (bei keiner Religionszugehörigkeit = 0) -->
 	        <INPUT name="R" type="int"/>
 	
 	        <!-- Steuerpflichtiger Arbeitslohn für den Lohnzahlungszeitraum vor Berücksichtigung des 
 	             Versorgungsfreibetrags und des Zuschlags zum Versorgungsfreibetrag, des Altersentlastungsbetrags 
 	             und des als elektronisches Lohnsteuerabzugsmerkmal festgestellten oder in der Bescheinigung für 
-	             den Lohnsteuerabzug 2023 für den Lohnzahlungszeitraum eingetragenen Freibetrags bzw. 
+	             den Lohnsteuerabzug 2024 für den Lohnzahlungszeitraum eingetragenen Freibetrags bzw. 
 	             Hinzurechnungsbetrags in Cent -->
 	        <INPUT name="RE4" type="BigDecimal"/>
 	
@@ -303,7 +295,8 @@
 		        <!-- Beitragsbemessungsgrenze in der gesetzlichen Krankenversicherung 
 		        	und der sozialen Pflegeversicherung in Euro -->
 		        <INTERNAL name="BBGKVPV" type="BigDecimal" default="new BigDecimal(0)"/>
-
+		        <!--  Nach Programmablaufplan 2019 -->
+		        <INTERNAL name="bd" type="BigDecimal" default="new BigDecimal(0)"/>
 		        <!-- allgemeine Beitragsbemessungsgrenze in der allgemeinen Renten-versicherung in Euro -->
 		        <INTERNAL name="BBGRV" type="BigDecimal" default="new BigDecimal(0)"/>
 		
@@ -400,10 +393,10 @@
 		        <!-- Mindeststeuer fuer die Steuerklassen V und VI in EURO -->
 		        <INTERNAL name="MIST" type="BigDecimal" default="new BigDecimal(0)"/>
 		
-		        <!-- Beitragssatz des Arbeitgebers zur Pflegeversicherung (6 Dezimalstellen)-->
+		        <!-- Beitragssatz des Arbeitgebers zur Pflegeversicherung -->
 		        <INTERNAL name="PVSATZAG" type="BigDecimal" default="new BigDecimal(0)"/>
 		
-		        <!-- Beitragssatz des Arbeitnehmers zur Pflegeversicherung (6 Dezimalstellen)-->
+		        <!-- Beitragssatz des Arbeitnehmers zur Pflegeversicherung -->
 		        <INTERNAL name="PVSATZAN" type="BigDecimal" default="new BigDecimal(0)"/>
 		
 				<!-- Beitragssatz des Arbeitnehmers in der allgemeinen gesetzlichen Rentenversicherung (4 Dezimalstellen)  -->
@@ -446,9 +439,6 @@
 				<!-- Zwischenfeld zur Ermittlung der Steuer auf Vergütungen für mehrjährige Tätigkeit -->
 		        <INTERNAL name="STOVMT" type="BigDecimal" default="new BigDecimal(0)"/>
 		        
-		        <!-- Teilbetragssatz der Vorsorgepauschale für die Rentenversicherung (2 Dezimalstellen) -->
-		        <INTERNAL name="TBSVORV" type="BigDecimal" default="new BigDecimal(0)"/>
-		 
 		        <!-- Bemessungsgrundlage fuer den Versorgungsfreibetrag in Cents -->
 		        <INTERNAL name="VBEZB" type="BigDecimal" default="new BigDecimal(0)"/>
 		
@@ -670,34 +660,33 @@
      </IF>
        
         <EVAL exec="BBGKVPV = new BigDecimal(62100)"/> <!-- Geändert für 2024 -->
-      	<EVAL exec="KVSATZAN = (KVZ.divide(ZAHL2).divide(ZAHL100)).add(BigDecimal.valueOf(0.07))"/><!-- Neu 2019 -->
-      	<EVAL exec="KVSATZAG = BigDecimal.valueOf(0.0085).add(BigDecimal.valueOf(0.07))"/>  <!-- geändert für 2024 -->
+       	<EVAL exec="bd = new BigDecimal(2)"/><!-- Neu 2019 -->
+      	<EVAL exec="KVSATZAN = (KVZ.divide(bd).divide(ZAHL100)).add(BigDecimal.valueOf(0.07))"/><!-- Neu 2019 -->
+      	<EVAL exec="KVSATZAG = BigDecimal.valueOf(0.0085+0.07)"/>  <!-- Geändert für 2024-->
       	
-      	<!-- geändert ab 2024 -->
       	<IF expr="PVS == 1">
       		<THEN>
-      			<EVAL exec="PVSATZAN = BigDecimal.valueOf(0.022)"/> 
-      			<EVAL exec="PVSATZAG = BigDecimal.valueOf(0.012)"/> 
+      			<EVAL exec="PVSATZAN = BigDecimal.valueOf(0.022)"/> <!-- Neu 2024 -->
+      			<EVAL exec="PVSATZAG = BigDecimal.valueOf(0.012)"/> <!-- Neu 2024 -->
       		</THEN>
       		<ELSE>
-        		<EVAL exec="PVSATZAN =  BigDecimal.valueOf(0.017)"/> 
-        		<EVAL exec="PVSATZAG =  BigDecimal.valueOf(0.017)"/> 
+        		<EVAL exec="PVSATZAN =  BigDecimal.valueOf(0.017)"/> <!-- Neu 2024 -->
+        		<EVAL exec="PVSATZAG =  BigDecimal.valueOf(0.017)"/> <!-- Neu 2024 -->
       		</ELSE>
       	</IF>
       	<IF expr="PVZ == 1">
       		<THEN>
-      			<EVAL exec="PVSATZAN = PVSATZAN.add(BigDecimal.valueOf(0.006))"/> 
+      			<EVAL exec="PVSATZAN = PVSATZAN.add(BigDecimal.valueOf(0.006))"/> <!--  geändert für 2024 -->
       		</THEN>
-      		<ELSE>
-      			<EVAL exec="PVSATZAN = PVSATZAN.subtract(PVA.multiply(BigDecimal.valueOf(0.0025)))"/> 
-      		</ELSE>
       	</IF>
       	
-      	 <EVAL exec="W1STKL5 = new BigDecimal(13279)"/>    <!-- geändert 2024 -->  
-      	 <EVAL exec="W2STKL5 = new BigDecimal(33380)"/> <!-- geändert 2024 -->
+      	 <!-- Anfang Geändert für 2024 --> 
+      	 <EVAL exec="W1STKL5 = new BigDecimal(13279)"/> 
+      	 <EVAL exec="W2STKL5 = new BigDecimal(33380)"/>
       	 <EVAL exec="W3STKL5 = new BigDecimal(222260)"/>
-      	 <EVAL exec="GFB = new BigDecimal(11604)"/>  <!-- geändert 2024 -->
-      	 <EVAL exec="SOLZFREI = new BigDecimal(18130)"/> <!-- geändert 2024 -->
+      	 <EVAL exec="GFB = new BigDecimal(11604)"/> 
+      	 <EVAL exec="SOLZFREI = new BigDecimal(18130)"/>
+     	 <!-- Ende Geändert für 2024 -->
      
   </METHOD>
 
@@ -950,12 +939,12 @@
       <THEN>
       	<IF expr="ZRE4.compareTo(ZVBEZ) == 1">
         	<THEN>
-	        	<IF expr="ZRE4.subtract(ZVBEZ).compareTo(BigDecimal.valueOf(1230)) == -1"> <!-- Geändert für 2023 -->
+	        	<IF expr="ZRE4.subtract(ZVBEZ).compareTo(BigDecimal.valueOf(1230)) == -1">
 		        	<THEN>
 		        		<EVAL exec="ANP = ANP.add(ZRE4).subtract(ZVBEZ).setScale(0,BigDecimal.ROUND_UP)"/>
 		        	</THEN>
 	        		<ELSE>
-	        			<EVAL exec="ANP = ANP.add(BigDecimal.valueOf(1230))"/> <!-- Geändert für 2023 -->
+	        			<EVAL exec="ANP = ANP.add(BigDecimal.valueOf(1230))"/>
 	        		</ELSE>
 	        	</IF>
         	</THEN>
@@ -971,7 +960,7 @@
 	  <ELSE>
 			<IF expr="STKL == 2">
 			    <THEN>
-			        <EVAL exec="EFA= BigDecimal.valueOf (4260)"/> <!-- Geändert für 2023 -->
+			        <EVAL exec="EFA= BigDecimal.valueOf (4260)"/> <!-- Geändert für 2022 -->
 			        <EVAL exec="SAP= BigDecimal.valueOf (36)"/>
 			        <EVAL exec="KFB= (ZKF.multiply (BigDecimal.valueOf (9312))).setScale (0, BigDecimal.ROUND_DOWN)"/> <!-- Geändert für 2024 -->
 			    </THEN>
@@ -1111,7 +1100,7 @@
       				<EVAL exec="ZRE4VP = BBGRV"/>
       			</THEN>
       		</IF>
-      		<EVAL exec="VSP1 = (ZRE4VP.multiply(RVSATZAN)).setScale(2,BigDecimal.ROUND_DOWN)"/> <!--  geändert 2024 -->
+      		<EVAL exec="VSP1 = (ZRE4VP.multiply(RVSATZAN)).setScale(2,BigDecimal.ROUND_DOWN)"/>
 	    </ELSE>
     </IF>
     <EVAL exec="VSP2 = (ZRE4VP.multiply(BigDecimal.valueOf(0.12))).setScale(2,BigDecimal.ROUND_DOWN)"/>
