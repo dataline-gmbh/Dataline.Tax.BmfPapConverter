@@ -95,6 +95,10 @@ namespace %projectname%.Test
             if (line.ContainsKey("MBV"))
                 ((dynamic)e).MBV = decimal.Parse(line["MBV"], _culture);
 
+            // der Parameter PVA wurde 2024 hinzugefügt; Legacy-Variante eingebaut
+            if (line.ContainsKey("PVA"))
+                ((dynamic)e).PVA = decimal.Parse(line["PVA"], _culture);
+
             var berechnung = new Berechnung(e);
             berechnung.Lohnsteuer();
 
