@@ -55,9 +55,15 @@ Zum Erstellen der Dateien müssen die Werte aus den Tabellen kopiert werden und 
 Danach wird jede Zeile in () gesetzt, mit einem Komma von der nächsten getrennt, zum Schluss wird alles von () umschlossen. 
 Diese Datei muss dann mit Hilfe des Cmdlets in dasselbe Format wie die Datei test-maschinell umgewandelt werden. Dazu wird der Inhalt als Parameter übergeben.
 
-Beispiel: New-BmfTestData -Type Allgemein -Table ((5000,0,0,0,0,470,616), ...)
+Zur Verwendung des Cmdlets New-BmfTestData muss das Projekt BmfPapConverter.Cmdlets ausgeführt werden, welches die Powershell öffnet. Dort muss dann **import-module -Name .\Dataline.Tax.BmfPapConverter.Cmdlets.dll** aufgerufen werden, um das Cmdlet zu installieren.
+Anschließend muss das Cmdlet aufgerufen werden:
+
+Beispiel für allgemeine Tabelle: New-BmfTestData -Type Allgemein -Table ((5000,0,0,0,0,470,616), ...)
+
+Beispiel für besondere Tabelle: New-BmfTestData -Type Besonders -Table ((5000,0,0,0,0,470,616), ...)
   
-Danach wird noch der Parameter KVZ abgefragt, dessen Wert sich ebenfalls im PDF vom maschinellen Programmablaufplan unterhalb der allgemeinen Tabelle befindet. Ebenso wird das Ausgabeverzeichnis für die zu erstellende Datei abgefragt.
+Danach wird noch der Parameter KVZ abgefragt, dessen Wert sich ebenfalls im PDF vom maschinellen Programmablaufplan unterhalb der allgemeinen Tabelle befindet. 
+Ebenso wird das Ausgabeverzeichnis für die zu erstellende Datei abgefragt.
 
 **intern**
 

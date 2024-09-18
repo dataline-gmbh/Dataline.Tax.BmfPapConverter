@@ -70,7 +70,7 @@ foreach ($jahrPath in Get-ChildItem -Directory $targetDir) {
         $testCsvs = Get-ChildItem (Join-Path -Path $currentDir -ChildPath "test-*.csv")
     
         Write-Progress -Activity $name -Status "Konvertiere PAP"
-        Convert-BmfPap -PapPath $papPath -Year $jahr -OutputDirectory $outDir -Namespace $name -TestDataPaths $testCsvs -ProjectAuthor "DATALINE GmbH & Co. KG" -ProjectCopyright "$((Get-Date).Year) DATALINE GmbH & Co. KG" -ProjectDescription "BMF-PAP Lohnsteuerberechnung $jahr" -ProjectVersion $Version -ProjectTags "DATALINE", "$jahr" -Extensions "TariflicheEinkommensteuer" -Macros "yearshort", $jahrKurz
+        Convert-BmfPap -PapPath $papPath -Year $jahr -OutputDirectory $outDir -Namespace $name -TestDataPaths $testCsvs -ProjectAuthor "DATALINE Lohnabzug GmbH" -ProjectCopyright "$((Get-Date).Year) DATALINE Lohnabzug GmbH" -ProjectDescription "BMF-PAP Lohnsteuerberechnung $jahr" -ProjectVersion $Version -ProjectTags "DATALINE", "$jahr" -Extensions "TariflicheEinkommensteuer" -Macros "yearshort", $jahrKurz
         CheckExitCode
     }
 
