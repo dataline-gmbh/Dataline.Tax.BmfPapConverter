@@ -1,6 +1,6 @@
-﻿<PAP name="Lohnsteuer2024Dezember" version="1.0" versionNummer="1.0">   
+﻿<PAP name="Lohnsteuer2024AbDezember" version="1.0" versionNummer="1.0">   
     <VARIABLES> 
-		<!-- Stand: 2024-10-11 06:50-->
+		<!-- Stand: 2024-08-30 15:35-->
 		<!-- ITZBund Berlin --> 
 
    		 <!--  EINGABEPARAMETER  -->
@@ -688,7 +688,6 @@
 
 	<EVAL exec="W1STKL5 = BigDecimal.valueOf(13432)"/> <!-- Neu für 12.2024 -->
 	<EVAL exec="GFB = BigDecimal.valueOf(11784)"/> <!-- Neu für 12.2024 -->
-	<EVAL exec="SOLZFREI = BigDecimal.valueOf(18130)"/> <!-- Neu für 12.2024 -->
 	<EVAL exec="ZRE4VP = ZRE4VPM"/> <!-- Neu für 12.2024 -->
 	
 	<EXECUTE method="MBERECH"/> <!-- Neu für 12.2024 -->
