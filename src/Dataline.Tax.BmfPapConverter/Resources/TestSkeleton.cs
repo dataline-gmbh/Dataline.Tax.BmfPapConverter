@@ -86,9 +86,6 @@ namespace %projectname%.Test
                 STERBE = decimal.Parse(line["STERBE"], _culture),
                 VBS = decimal.Parse(line["VBS"], _culture),
                 SONSTENT = decimal.Parse(line["SONSTENT"], _culture),
-                VKAPA = decimal.Parse(line["VKAPA"], _culture),
-                VMT = decimal.Parse(line["VMT"], _culture),
-                ENTSCH = decimal.Parse(line["ENTSCH"], _culture)
             };
 
             // der Parameter MBV wurde 2022 hinzugefügt; Legacy-Variante eingebaut
@@ -99,7 +96,28 @@ namespace %projectname%.Test
             if (line.ContainsKey("PVA"))
                 ((dynamic)e).PVA = decimal.Parse(line["PVA"], _culture);
 
-            var berechnung = new Berechnung(e);
+        // die folgenden Parameter sind 2025 entfallen; Legacy-Variante eingebaut
+        #region 2025 entfallen
+        if (line.ContainsKey("VKAPA"))
+            ((dynamic)e).VKAPA = decimal.Parse(line["VKAPA"], _culture);
+
+        if (line.ContainsKey("VMT"))
+            ((dynamic)e).VMT = decimal.Parse(line["VMT"], _culture);
+
+        if (line.ContainsKey("ENTSCH"))
+            ((dynamic)e).ENTSCH = decimal.Parse(line["ENTSCH"], _culture);
+
+        if (line.ContainsKey("STV"))
+            ((dynamic)e).STV = decimal.Parse(line["STV"], _culture);
+
+        if (line.ContainsKey("SOLZV"))
+            ((dynamic)e).SOLZV = decimal.Parse(line["SOLZV"], _culture);
+
+        if (line.ContainsKey("BKV"))
+            ((dynamic)e).BKV = decimal.Parse(line["BKV"], _culture);
+        #endregion
+
+        var berechnung = new Berechnung(e);
             berechnung.Lohnsteuer();
 
             var a = berechnung.Ausgabeparameter;
@@ -112,9 +130,9 @@ namespace %projectname%.Test
             OptionalTest(line, "STS", a.STS);
             OptionalTest(line, "SOLZS", a.SOLZS);
             OptionalTest(line, "BKS", a.BKS);
-            OptionalTest(line, "STV", a.STV);
-            OptionalTest(line, "SOLZV", a.SOLZV);
-            OptionalTest(line, "BKV", a.BKV);
+            //OptionalTest(line, "STV", a.STV);
+            //OptionalTest(line, "SOLZV", a.SOLZV);
+            //OptionalTest(line, "BKV", a.BKV);
             OptionalTest(line, "VKVLZZ", a.VKVLZZ);
             OptionalTest(line, "VKVSONST", a.VKVSONST);
         }

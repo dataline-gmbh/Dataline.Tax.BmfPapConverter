@@ -43,7 +43,7 @@ namespace Dataline.Tax.BmfPapConverter.Cmdlets
             const string header =
                 "lfd. Nr.;STKL;AF;F;ZKF;AJAHR;ALTER1;RE4;VBEZ;LZZ;KRV;KVZ;PKPV;PKV;PVS;PVZ;R;" +
                 "LZZFREIB;LZZHINZU;VJAHR;VBEZM;VBEZS;ZMVB;JRE4;JVBEZ;JFREIB;JHINZU;JRE4ENT;" +
-                "SONSTB;STERBE;VBS;SONSTENT;VKAPA;VMT;ENTSCH;LSTLZZ";
+                "SONSTB;STERBE;VBS;SONSTENT;LSTLZZ";
             var culture = new CultureInfo("de-DE"); // Deutsche Dezimaltrenner in CSV
             
             if (ParameterSetName == "Standard")
@@ -57,7 +57,8 @@ namespace Dataline.Tax.BmfPapConverter.Cmdlets
                         break;
                     case StandardTestDataTypes.Besonders:
                         Pkv = 1m;
-                        Krv = 2m;
+                        Krv = 1m; // ab 2025
+                        //Krv = 2m; // bis 2024
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -106,7 +107,7 @@ namespace Dataline.Tax.BmfPapConverter.Cmdlets
                             lzz, // LZZ
                             Krv, // KRV
                             Kvz, // KVZ
-                            0m, // PKPV
+                            0, // PKPV
                             Pkv, // PKV
                             0m, // PVS
                             pvz, // PVZ
@@ -126,9 +127,6 @@ namespace Dataline.Tax.BmfPapConverter.Cmdlets
                             0m, // STERBE
                             0m, // VBS
                             0m, // SONSTENT
-                            0m, // VKAPA
-                            0m, // VMT
-                            0m, // ENTSCH
                             jahreslohnsteuer * 100 // LSTLZZ
                         };
 
