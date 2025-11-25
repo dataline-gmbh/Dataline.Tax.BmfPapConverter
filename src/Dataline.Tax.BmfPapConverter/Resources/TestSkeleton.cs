@@ -115,6 +115,12 @@ namespace %projectname%.Test
 
         if (line.ContainsKey("BKV"))
             ((dynamic)e).BKV = decimal.Parse(line["BKV"], _culture);
+
+        if (line.ContainsKey("VKVLZZ"))
+            ((dynamic)e).VKVLZZ = decimal.Parse(line["VKVLZZ"], _culture);
+
+        if (line.ContainsKey("VKVSONST"))
+            ((dynamic)e).VKVSONST = decimal.Parse(line["VKVSONST"], _culture);
         #endregion
 
         var berechnung = new Berechnung(e);
