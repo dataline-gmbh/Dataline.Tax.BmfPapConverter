@@ -133,8 +133,8 @@ namespace %projectname%.Test
             //OptionalTest(line, "STV", a.STV);
             //OptionalTest(line, "SOLZV", a.SOLZV);
             //OptionalTest(line, "BKV", a.BKV);
-            OptionalTest(line, "VKVLZZ", a.VKVLZZ);
-            OptionalTest(line, "VKVSONST", a.VKVSONST);
+            //OptionalTest(line, "VKVLZZ", a.VKVLZZ); entfällt ab 2026
+            //OptionalTest(line, "VKVSONST", a.VKVSONST); entfällt ab 2026
         }
 
         private static void RunEStTest(Dictionary<string, string> line)

@@ -46,13 +46,13 @@ Der erste Schritt ist die Erstellung eines neuen Data-Ordners für das betreffen
 
 Die alten Data-Ordner sollten in 20xx-old umbenannt werden, damit keine neue Artefakte erstellt werden. 
 
-Die Datei **pap.xml** ist die neue Pseudo-XML-Datei vom Bundesministerium der Finanzen, die auf der o.g. Internetseite veröffentlicht wird. Diese sollte so wie sie ist in das Verzeichnis kopiert werden.
+Die Datei **pap.xml** ist die neue Pseudo-XML-Datei vom Bundesministerium der Finanzen, die auf der o.g. Internetseite veröffentlicht wird. Diese sollte so wie sie ist in das Verzeichnis kopiert werden. Hinweis: Seitenquelltext in eine Datei namens pap.xml kopieren!
 
-Die Testdaten **test-maschinell.csv** entstammt der zum XML-Pseudocode hinzugefügten xlsx-Datei. Aus dieser werden alle Zeilen incl. der Überschriftzeile als csv-Datei exportiert. Dazu einfach als csv-Datei speichern.
+Die Testdaten **test-maschinell.csv** entstammt der (bis 2025?) zum XML-Pseudocode hinzugefügten xlsx-Datei. Aus dieser werden alle Zeilen incl. der Überschriftzeile als csv-Datei exportiert. Dazu einfach als csv-Datei speichern. Hinweis: für 2026 wurde dies wahrscheinlich eingestellt.
 
 Die Testdaten **test-allgemein.csv** und **test-besondere.csv** basieren auf den Tabellen, die sich am Ende des PDFs des maschinellen Programmablaufplans des BMF befinden. 
 Zum Erstellen der Dateien müssen die Werte aus den Tabellen kopiert werden und in ein importierbares Format umgewandelt werden. Dazu werden zuerst alle Punkte entfernt und danach alle Leerzeichen durch Kommas ersetzt.
-Danach wird jede Zeile in () gesetzt, mit einem Komma von der nächsten getrennt, zum Schluss wird alles von () umschlossen. 
+Danach wird jede Zeile in () gesetzt, mit einem Komma von der nächsten getrennt, zum Schluss wird alles von () umschlossen. Hinweis: hierzu kann eine KI sehr gut verwendet werden.
 Diese Datei muss dann mit Hilfe des Cmdlets in dasselbe Format wie die Datei test-maschinell umgewandelt werden. Dazu wird der Inhalt als Parameter übergeben.
 
 Zur Verwendung des Cmdlets New-BmfTestData muss das Projekt BmfPapConverter.Cmdlets ausgeführt werden, welches die Powershell öffnet. Dort muss dann **import-module -Name .\Dataline.Tax.BmfPapConverter.Cmdlets.dll** aufgerufen werden, um das Cmdlet zu installieren.
@@ -63,7 +63,7 @@ Beispiel für allgemeine Tabelle: New-BmfTestData -Type Allgemein -Table ((5000,
 Beispiel für besondere Tabelle: New-BmfTestData -Type Besonders -Table ((5000,0,0,0,0,470,616), ...)
   
 Danach wird noch der Parameter KVZ abgefragt, dessen Wert sich ebenfalls im PDF vom maschinellen Programmablaufplan unterhalb der allgemeinen Tabelle befindet. 
-Ebenso wird das Ausgabeverzeichnis für die zu erstellende Datei abgefragt.
+Ebenso wird der Name der Ausgabedatei für die zu erstellende Datei abgefragt.
 
 **intern**
 
