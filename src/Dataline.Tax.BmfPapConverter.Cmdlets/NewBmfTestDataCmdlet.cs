@@ -29,8 +29,11 @@ namespace Dataline.Tax.BmfPapConverter.Cmdlets
         [Parameter(Mandatory = true, HelpMessage = "Krankenversicherung", ParameterSetName = "Custom"), ValidateRange(0, 2)]
         public decimal Pkv { get; set; }
 
-        [Parameter(Mandatory = true, HelpMessage = "Merker für die Vorsorgepauschale", ParameterSetName = "Custom"), ValidateRange(0, 2)]
+        [Parameter(Mandatory = true, HelpMessage = "Merker für die Vorsorgepauschale (KV)", ParameterSetName = "Custom"), ValidateRange(0, 2)]
         public decimal Krv { get; set; }
+
+        [Parameter(Mandatory = true, HelpMessage = "Merker für die Vorsorgepauschale (AV)", ParameterSetName = "Custom"), ValidateRange(0, 2)]
+        public decimal Alv { get; set; }
 
         [Parameter(Mandatory = true, HelpMessage = "Typ der Prüftabelle", ParameterSetName = "Standard")]
         public StandardTestDataTypes Type { get; set; }
@@ -43,7 +46,7 @@ namespace Dataline.Tax.BmfPapConverter.Cmdlets
             const string header =
                 "lfd. Nr.;STKL;AF;F;ZKF;AJAHR;ALTER1;RE4;VBEZ;LZZ;KRV;KVZ;PKPV;PKV;PVS;PVZ;R;" +
                 "LZZFREIB;LZZHINZU;VJAHR;VBEZM;VBEZS;ZMVB;JRE4;JVBEZ;JFREIB;JHINZU;JRE4ENT;" +
-                "SONSTB;STERBE;VBS;SONSTENT;LSTLZZ";
+                "SONSTB;STERBE;VBS;SONSTENT;MBV;PVA;PKPVAGZ;ALV;LSTLZZ";
             var culture = new CultureInfo("de-DE"); // Deutsche Dezimaltrenner in CSV
             
             if (ParameterSetName == "Standard")
@@ -54,11 +57,13 @@ namespace Dataline.Tax.BmfPapConverter.Cmdlets
                     case StandardTestDataTypes.Allgemein:
                         Pkv = 0m;
                         Krv = 0m;
+                        Alv = 0m;
                         break;
                     case StandardTestDataTypes.Besonders:
                         Pkv = 1m;
                         Krv = 1m; // ab 2025
                         //Krv = 2m; // bis 2024
+                        Alv = 1m;
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -90,6 +95,24 @@ namespace Dataline.Tax.BmfPapConverter.Cmdlets
                         decimal jre4 = jahresbruttolohn * 100;
                         decimal ajahr = 2040; // Geburt 1975
                         decimal alter1 = 0; // 64. LJ endet nach Ende des LZZ
+                        decimal pkpv = 0;
+
+                        // ab 2026: PKPV für Steuerklasse 3 mit 50000 Ct, für 6 mit 0 Ct, alle anderen 30000 Ct
+                        if (Type == StandardTestDataTypes.Besonders)
+                        {
+                            switch (steuerklasse)
+                            {
+                                case 3: 
+                                    pkpv = 50000;
+                                    break;
+                                case 6:
+                                    pkpv = 0;
+                                    break;
+                                default:
+                                    pkpv = 30000;
+                                    break;
+                            }
+                        }
 
                         // Spalten gemäß des Headers
                         // Nicht gesetzte Felder werden auf ihre Default-Werte gesetzt
@@ -107,7 +130,7 @@ namespace Dataline.Tax.BmfPapConverter.Cmdlets
                             lzz, // LZZ
                             Krv, // KRV
                             Kvz, // KVZ
-                            0, // PKPV
+                            pkpv, // PKPV
                             Pkv, // PKV
                             0m, // PVS
                             pvz, // PVZ
@@ -127,6 +150,10 @@ namespace Dataline.Tax.BmfPapConverter.Cmdlets
                             0m, // STERBE
                             0m, // VBS
                             0m, // SONSTENT
+                            0m, // MBV
+                            0m, // PVA
+                            0m, // PKPVAGZ
+                            Alv,
                             jahreslohnsteuer * 100 // LSTLZZ
                         };
 
