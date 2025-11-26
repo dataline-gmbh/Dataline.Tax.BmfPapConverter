@@ -88,13 +88,21 @@ namespace %projectname%.Test
                 SONSTENT = decimal.Parse(line["SONSTENT"], _culture),
             };
 
-            // der Parameter MBV wurde 2022 hinzugefügt; Legacy-Variante eingebaut
-            if (line.ContainsKey("MBV"))
-                ((dynamic)e).MBV = decimal.Parse(line["MBV"], _culture);
+         // der Parameter MBV wurde 2022 hinzugefügt; Legacy-Variante eingebaut
+         if (line.ContainsKey("MBV"))
+            ((dynamic)e).MBV = decimal.Parse(line["MBV"], _culture);
 
-            // der Parameter PVA wurde 2024 hinzugefügt; Legacy-Variante eingebaut
-            if (line.ContainsKey("PVA"))
-                ((dynamic)e).PVA = decimal.Parse(line["PVA"], _culture);
+         // der Parameter PVA wurde 2024 hinzugefügt; Legacy-Variante eingebaut
+         if (line.ContainsKey("PVA"))
+            ((dynamic)e).PVA = decimal.Parse(line["PVA"], _culture);
+
+        // der Parameter PKPVAGZ wurde 2026 hinzugefügt; Legacy-Variante eingebaut
+        if (line.ContainsKey("PKPVAGZ"))
+           ((dynamic)e).PKPVAGZ = decimal.Parse(line["PKPVAGZ"], _culture);
+
+        // der Parameter ALV wurde 2026 hinzugefügt; Legacy-Variante eingebaut
+        if (line.ContainsKey("ALV"))
+           ((dynamic)e).ALV = int.Parse(line["ALV"], _culture);
 
         // die folgenden Parameter sind 2025 entfallen; Legacy-Variante eingebaut
         #region 2025 entfallen
@@ -130,6 +138,7 @@ namespace %projectname%.Test
             OptionalTest(line, "STS", a.STS);
             OptionalTest(line, "SOLZS", a.SOLZS);
             OptionalTest(line, "BKS", a.BKS);
+
             //OptionalTest(line, "STV", a.STV);
             //OptionalTest(line, "SOLZV", a.SOLZV);
             //OptionalTest(line, "BKV", a.BKV);
